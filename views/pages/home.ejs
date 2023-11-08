@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <%- include('../partials/head'); %>
-    <link rel="stylesheet" type="text/css" href="/css/newpost.css" >
+    <link rel="stylesheet" type="text/css" href="/css/form.css" >
+    <link rel="stylesheet" type="text/css" href="/css/formatacoes.css" >
 </head>
 <body class="container">
-
 <main>
     <div class="createpost">
         <form action="/home" method="POST">
@@ -39,7 +39,27 @@
 
         </form>
     </div>
-    
+    <div class="formatos">
+        <h1>Formatações</h1>
+
+        <section>
+            <p>Para dar destaque a frases use: <strong>*</strong></p>
+            <h6><span class="ex">HTML não é uma <br>*linguagem de programação*</span></h6>
+        </section>
+
+        <section>
+            <p>Para criar blocos de observação, use <strong>[</strong></p>
+            <h6><span class="ex">[Lembre-se! As noticias são enviadas automaticamente via email]</span></h6>
+        </section>
+
+        <section>
+            <p>Para criar hiperlinks, use <strong>#</strong></p>
+            <h6><span class="ex">Meu repositorio: # link #</span></h6>
+        </section>
+
+        
+
+    </div>
 </main>
 
 <footer>

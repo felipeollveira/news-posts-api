@@ -1,0 +1,67 @@
+/* Estilos para a classe "formatos" */
+.formatos {
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    height: 756px;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow-y: scroll;
+  }
+  
+  /* Estilos para o título h1 */
+  .formatos h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #007BFF;
+  }
+  
+  /* Estilos para as seções de formatação */
+  .formatos section {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: left;
+  }
+  
+  /* Estilos para os parágrafos dentro das seções */
+  .formatos p {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 5px 0;
+    word-spacing: -1px;
+
+  }
+  
+  /* Estilos para destacar os caracteres especiais */
+  .formatos p strong {
+    color: #007BFF;
+    font-weight: bold;
+    font-size: 16pt;
+  }
+
+  .st{
+    color: #007BFF;
+    font-weight: bold;
+    font-size: 16pt;
+  }
+  
+  .formatos p strong:hover {
+    background-color: rgba(0, 0, 0, 0.062);
+  }
+  
+  h2 {
+    font-size: 18pt;
+    color: rgb(149, 149, 149);  
+      
+  }
+  
+  .ex {
+    color: rgb(139, 139, 139);
+    font-size: 12pt;
+  }
+  
