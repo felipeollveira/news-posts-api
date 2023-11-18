@@ -1,16 +1,36 @@
-/* Estilos para a classe "formatos" */
+
+@media screen and (max-width:768px) {
+  .formatos{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 5px;
+    overflow: scroll;
+    
+  }  
+  .formatos section{
+    padding: 5px;
+    min-height: 200px;
+    max-width: 200px;
+    min-width: 300px;
+  }
+}
+
 .formatos {
+  display: auto;
+  justify-content: center;
+  align-items: center;
     padding: 20px;
     border-radius: 8px;
-    width: 100%;
-    height: 756px;
-    max-width: 600px;
+    height: auto;
+    min-width: 250px;
+    max-width: 250px;
     margin: 0 auto;
-    overflow-y: scroll;
+
   }
   
   /* Estilos para o título h1 */
   .formatos h1 {
+    display: none;
     font-size: 24px;
     margin-bottom: 20px;
     text-align: center;
@@ -20,11 +40,12 @@
   /* Estilos para as seções de formatação */
   .formatos section {
     margin-bottom: 20px;
-    background-color: #ffffff;
+    color: white;
+    background-color: #191919;
     padding: 20px;
+    border: 1px solid black;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 100%;
     text-align: left;
   }
   

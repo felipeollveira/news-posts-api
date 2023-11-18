@@ -1,15 +1,30 @@
 /* Estilos para a seção principal */
+
+body{
+background-color: rgb(53, 53, 53); 
+}
+
 main {
-    background-color: #f0f0f0;
-    padding: 20px;
+
+
     display: grid;
-    gap: 3%;
-    grid-template-columns: 70% 27%;
+    gap: 2%;
+    grid-template-columns: 70% 20%;
+  }
+
+  @media screen and (max-width: 768px) {
+    main{
+      display: flex;
+      flex-direction: column-reverse;
+    }
   }
   
   /* Estilos para o formulário dentro da classe "createpost" */
   .createpost form {
-    background-color: #fff;
+    background-color: #272727;
+    border: 1px solid black;
+    height: 100%;
+    color: whitesmoke;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -21,9 +36,11 @@ main {
   textarea {
     width: 100%;
     padding: 10px;
+    color: white;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.318);
   }
   
   /* Estilos para o botão de "Publicar" */
