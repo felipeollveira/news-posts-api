@@ -1,16 +1,27 @@
 /*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
-/*=============== VARIABLES CSS ===============*/
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../fonts/proximanova/Proxima.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 :root {
-  /*========== Colors ==========*/
-  /*Color mode HSL(hue, saturation, lightness)*/
+--colorfooter: rgb(43, 43, 43);
+  --colorsystem: rgb(48, 82, 154);
+  --cor-h1: rgb(213, 213, 213);
+  --background: rgb(12, 12, 12);
+  --background-fl:rgba(17, 17, 17, 0.548);
+  --cor-borda: rgba(42, 42, 42, 0.843);
+  --bs-font-sans-serif: 'Proxima Nova', sans-serif;
+
   --white-color: hsl(0, 0%, 100%);
   --black-color: hsl(0, 0%, 0%);
 
-  /*========== Font and typography ==========*/
-  /*.5rem = 8px | 1rem = 16px ...*/
-  --body-font: "Poppins", sans-serif;
+  --body-font: 'Proxima Nova', sans-serif;
   --h1-font-size: 2rem;
   --normal-font-size: 1rem;
   --small-font-size: .813rem;
@@ -19,7 +30,7 @@
 /*=============== BASE ===============*/
 * {
   box-sizing: border-box;
-  padding: 0;
+  padding: 5px;
   margin: 0;
 }
 
