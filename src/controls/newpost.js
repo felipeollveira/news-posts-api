@@ -11,6 +11,13 @@ const post_go_db = async (req, res, next) => {
     const timestamp = new Date().toISOString();
     try {
         if (!titulo || !desenvolvimento || !conclusao || !introducao)return res.status(401).send({ message: 'Dados inválidos' });
+        
+        const existsTitulo = await knex('post').select('titulo').where('titulo', titulo).first();
+
+        if(existsTitulo){
+          return res.status(401).json({mensagem: 'Uma publicação ja feita com esse mesmo titulo!'})
+        }
+
         const newPost = await knex('post').insert({ titulo, introducao, desenvolvimento, conclusao, data: timestamp, autor, images:imagem });
         console.log(JSON.stringify(req.body.images));
 
