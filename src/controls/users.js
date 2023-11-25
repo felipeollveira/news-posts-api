@@ -47,9 +47,20 @@ const homePage =  (req, res) => {
     }
   };
 
+
+  const postPage =  (req, res) => {
+    if (req.session.logado) {
+      res.render('pages/posts')
+    } else {
+      return res.redirect('/');
+    }
+  };
+
+
 module.exports = {
     loginPage,
     autLogin,
     homePage,
+    postPage
 
  }

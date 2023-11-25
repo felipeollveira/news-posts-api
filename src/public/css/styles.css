@@ -8,6 +8,10 @@
   font-style: normal;
 }
 
+.root{
+  color: white;
+}
+
 
 :root {
 --colorfooter: rgb(43, 43, 43);
@@ -30,7 +34,7 @@
 /*=============== BASE ===============*/
 * {
   box-sizing: border-box;
-  padding: 5px;
+  padding: 4px;
   margin: 0;
 }
 
@@ -39,6 +43,7 @@ input,
 button {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
+
 }
 
 
@@ -56,6 +61,7 @@ img {
 /*=============== LOGIN ===============*/
 .login {
   position: relative;
+  padding: 0;
   height: 100vh;
   display: grid;
   align-items: center;

@@ -1,0 +1,14 @@
+#root{
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 12px;
+}
+
+.cards{
+    display: flex;
+    color: rgb(205, 205, 205);
+    align-content: center;
+    align-items: center;
+    border: 1px solid var(--cor-borda);
+    background-color: var(--background-fl);
+}

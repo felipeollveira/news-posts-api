@@ -1,7 +1,8 @@
 /* Estilos para a seção principal */
 
 body{
-background-color: var(--background)
+background-color: var(--background);
+
 }
 
 main {
