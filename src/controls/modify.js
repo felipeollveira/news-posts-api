@@ -36,6 +36,7 @@ const editPage = (req, res) => {
 
 const editPost = async (req, res) => {
     const { titulo, introducao, assunto, conclusao } = req.body;
+    console.log
 
     try {
         const existingPost = await knex('post').where('titulo', titulo).first();
