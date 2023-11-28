@@ -85,15 +85,17 @@ const fetchData = async () => {
         // Modify functionality
         imgModify.addEventListener("click", function() {
           let titulo = tituloElement.textContent;
-          fetch(`/posts/edit?titulo=${encodeURIComponent(titulo)}`, {
-              method: 'GET',
+      
+          fetch(`/posts/edit/${encodeURIComponent(titulo)}`, {
+              method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
               },
+              body: JSON.stringify({ titulo }),
           })
           .then(response => {
               if (response.ok) {
-                  alert('Post modificado com sucesso');
+                  window.location.href = response.url;
               } else {
                   console.error('Erro ao enviar a solicitação: ', response.status);
               }
@@ -103,7 +105,6 @@ const fetchData = async () => {
           });
       });
       
-
     }
 } else {
     console.log('Não há posts disponíveis.');
