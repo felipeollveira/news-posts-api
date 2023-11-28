@@ -24,22 +24,93 @@ const fetchData = async () => {
           cards.setAttribute('class', 'cards')
   
           let tituloElement = document.createElement("h5");
+          tituloElement.setAttribute('class', 'cardtitle')
           tituloElement.textContent = titulo;
 
           let dataElement = document.createElement("h5");
           dataElement.textContent = "Data: " + data.substring(0,4);
 
-          // Adiciona os elementos ao elemento raiz
-          cards.appendChild(tituloElement);
-          cards.appendChild(dataElement)
-          root.appendChild(cards);
+          let imgDelete = document.createElement('img')
+          imgDelete.setAttribute('src','/img/delete.png')
 
-          }
-      }
-    } catch (error) {
-      console.error(error);
+          let imgModify = document.createElement('img')
+          imgModify.setAttribute('src','/img/modify.png')
+
+          let titulos = document.createElement('section')
+          titulos.setAttribute('class', 'titulos')
+
+          let icons = document.createElement('section')
+          icons.setAttribute('class', 'icons')
+
+
+          // Adiciona os elementos ao elemento raiz
+          titulos.appendChild(tituloElement);
+          titulos.appendChild(dataElement);
+          icons.appendChild(imgModify);
+          icons.appendChild(imgDelete);
+
+          cards.appendChild(titulos);
+          cards.appendChild(icons);
+          root.appendChild(cards)
+
+
+
+          imgDelete.addEventListener("click", function() {
+            let titulo = tituloElement.textContent;
+            let btn = prompt('Deseja excluir? S/N');
+
+            if (btn === 'S') {
+                fetch('/posts/del', {
+                    method: 'POST',
+                    body: JSON.stringify({ titulo }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Post excluído com sucesso');
+                    } else {
+                        console.error('Erro ao enviar a solicitação: ', response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar a solicitação: ', error);
+                });
+            } else {
+                alert('Exclusão cancelada');
+            }
+        });
+
+        // Modify functionality
+        imgModify.addEventListener("click", function() {
+          let titulo = tituloElement.textContent;
+          fetch(`/posts/edit?titulo=${encodeURIComponent(titulo)}`, {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+          })
+          .then(response => {
+              if (response.ok) {
+                  alert('Post modificado com sucesso');
+              } else {
+                  console.error('Erro ao enviar a solicitação: ', response.status);
+              }
+          })
+          .catch(error => {
+              console.error('Erro ao enviar a solicitação: ', error);
+          });
+      });
+      
+
     }
-  };
-  
-  fetchData();
-  
+} else {
+    console.log('Não há posts disponíveis.');
+}
+} catch (error) {
+console.error(error);
+}
+};
+
+fetchData();
