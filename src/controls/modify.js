@@ -26,13 +26,13 @@ const deleteCard = async (req, res) => {
 };
 
 const editPage = (req, res) => {
-    if (req.session.logado) {
-        res.render('pages/edit')
-      } else {
-        return res.redirect('/');
-      }
-    };
-
+    try {
+        res.render('pages/edit');
+    } catch (error) {
+        console.log(error)
+        res.render('pages/home');
+    }
+}
 
 const editPost = async (req, res) => {
     const { titulo, introducao, assunto, conclusao } = req.body;
