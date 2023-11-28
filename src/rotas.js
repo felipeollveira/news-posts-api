@@ -21,12 +21,14 @@ root.post('/home' ,post_go_db )
 root.get('/api', return_get)
 root.get('/home', homePage)
 
+
+root.get('/posts', postPage)
 root.post('/posts/del', deleteCard)
 
 root.get('/posts/edit/:titulo', editPage)
 root.post('/posts/edit/:titulo', editPost)
 
-root.get('/posts', postPage)
+
 
 
 
