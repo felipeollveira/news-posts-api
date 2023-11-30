@@ -8,7 +8,6 @@ require('dotenv').config();
 
 
 const loginPage = (req, res) => {
-  //const idLogin = 'select id from usuarios where nome = $1'[req.body.login]
   if( req.session.logado === true) res.redirect('/home')
   else{
       res.render('pages/login')

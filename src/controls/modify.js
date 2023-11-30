@@ -1,17 +1,5 @@
 const knex = require('../sql/connect')
 
-const obterTituloDaURL = () => {
-    const currentURL = window.location.href;
-    const tituloIndex = currentURL.indexOf('=');
-
-    if (tituloIndex !== -1) {
-        const tituloPart = currentURL.substring(tituloIndex + 1);
-        const tituloDecoded = decodeURIComponent(tituloPart.replace(/%20/g, ' '));
-        return tituloDecoded;
-    }
-    
-    return ''; }
-
 const deleteCard = async (req, res) => {
     const { titulo } = req.body;
     console.log(titulo)
