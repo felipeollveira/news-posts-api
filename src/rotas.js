@@ -23,8 +23,8 @@ root.get('/api', return_get)
 root.get('/home', homePage)
 
 
-root.get('/posts/', postPage)
-root.post('/posts/', deleteCard)
+root.get('/posts/update', postPage)
+root.post('/posts/update', deleteCard)
 
 
 root.get('/posts/update/:title/', (req, res) => {
