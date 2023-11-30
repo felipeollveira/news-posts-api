@@ -17,9 +17,4 @@ server.use(cors());
 server.use(root) // rotas
 
 // Iniciand o servidor
-const PORT = process.env.PORT || 3000; 
-server.listen(PORT, () => {
-  console.log(`Servidor iniciado na porta ${PORT}`);
-});
 
-console.log(`http://localhost:${PORT}/`)
