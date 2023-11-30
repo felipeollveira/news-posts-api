@@ -4,7 +4,14 @@ const session = require('express-session');
 const server = express();
 const cors = require('cors');
 const { join } = require('path');
-server.use(session({ secret: process.env.private_key, resave: true, saveUninitialized: true }));
+const sessionSecret = process.env.private_key
+
+
+
+
+
+
+server.use(session({ secret: sessionSecret, resave: true, saveUninitialized: true }));
 
 
 server.use(express.static(__dirname + '/middles'));
