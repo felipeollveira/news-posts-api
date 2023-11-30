@@ -18,13 +18,13 @@ const { post_go_db, return_get } = require('./controls/newpost');
 
 root.post('/', autLogin)
 root.get('/', loginPage)
-root.post('/home' ,post_go_db )
+root.post('/new/' ,post_go_db )
 root.get('/api', return_get)
-root.get('/home', homePage)
+root.get('/new/', homePage)
 
 
-root.get('/posts/update', postPage)
-root.post('/posts/update', deleteCard)
+root.get('/posts/', postPage)
+root.post('/posts/', deleteCard)
 
 
 root.get('/posts/update/:title/', (req, res) => {

@@ -27,7 +27,7 @@ const loginPage = (req, res) => {
       if (user && (await bcrypt.compare(senha, user.password))) {
         req.session.logado = true;
         req.session.login = login;
-        return res.status(200).redirect('/home');
+        return res.status(200).redirect('/new');
       } else {
         return res.redirect('/');
       }
