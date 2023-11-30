@@ -60,7 +60,7 @@ const fetchData = async () => {
             let btn = prompt('Deseja excluir? S/N');
 
             if (btn === 'S') {
-                fetch('/posts/del', {
+                fetch('/posts/', {
                     method: 'POST',
                     body: JSON.stringify({ titulo }),
                     headers: {
@@ -82,32 +82,26 @@ const fetchData = async () => {
             }
         });
 
-        // Modify functionality
-        imgModify.addEventListener("click", function() {
-          let titulo = tituloElement.textContent;
-      
-          fetch(`/posts/edit/${encodeURIComponent(titulo)}`, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ titulo }),
-          })
-          .then(response => {
-              if (response.ok) {
-                  window.location.href = response.url;
-              } else {
-                  console.error('Erro ao enviar a solicitação: ', response.status);
-              }
-          })
-          .catch(error => {
-              console.error('Erro ao enviar a solicitação: ', error);
-          });
-      });
+
+            imgModify.addEventListener("click", function() {
+            let titulocard = tituloElement.textContent;
+            
+            try {
+                let titulocardEncoded = encodeURIComponent(titulocard);
+                let url = `/posts/update/${titulocardEncoded}`;
+        
+                window.location.href = url;
+            
+            } catch (error) {
+                console.log(error);
+            }
+        });
+        
+       
       
     }
 } else {
-    console.log('Não há posts disponíveis.');
+    console.log('Não ha posts disponíveis');
 }
 } catch (error) {
 console.error(error);

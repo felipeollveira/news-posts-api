@@ -4,17 +4,18 @@ const assuntoTextarea = document.querySelector('textarea[name="assunto"]');
 const conclusaoTextarea = document.querySelector('textarea[name="conclusao"]');
 
 const obterTituloDaURL = () => {
-    const currentURL = window.location.href;
-    const tituloIndex = currentURL.indexOf('edit/');
+    const urlSegments = window.location.pathname.split('/');
+    const tituloEncoded = urlSegments[urlSegments.length - 1];
 
-    if (tituloIndex !== -1) {
-        const tituloPart = currentURL.substring(tituloIndex + 5);
-        const tituloDecoded = decodeURIComponent(tituloPart.replace(/%20/g, ' '));
+    if (tituloEncoded) {
+        const tituloDecoded = decodeURIComponent(tituloEncoded);
         return tituloDecoded;
     }
-
     return '';
 };
+
+
+
 
 const buscarPostNaAPI = async (tituloDoPost) => {
     try {

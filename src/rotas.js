@@ -2,12 +2,13 @@ const express = require('express');
 const root = express();
 root.use(express.json());
 root.use(express.urlencoded({ extended: true }));
+const knex = require('./sql/connect')
 
 const bodyParser = require('body-parser');
 root.set('view engine','ejs')
 
 
-const { deleteCard, editPage, editPost } = require('./controls/modify');
+const { deleteCard, editPost } = require('./controls/modify');
 
 const { loginPage, autLogin, homePage, postPage } = require('./controls/users');
 
@@ -23,10 +24,18 @@ root.get('/home', homePage)
 
 
 root.get('/posts', postPage)
-root.post('/posts/del', deleteCard)
+root.post('/posts', deleteCard)
 
-root.get('/posts/edit/:titulo', editPage)
-root.post('/posts/edit/:titulo', editPost)
+
+root.get('/posts/update/:title', (req, res) => {
+    const title = req.params.title;
+    res.render('pages/edit', { title });
+});
+
+root.post('/posts/update/:title', editPost)
+   
+
+
 
 
 

@@ -7,21 +7,22 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css" >
 </head>
 <body class="container">
+    <a href="/posts">Voltar</a>
 <main>
     <div class="createpost">
-        <form action="/home" method="POST">
+        <form action="/posts/update/<%= encodeURIComponent(title) %>" method="POST">
         <section>
             <h5>Titulo do post</h5>
-            <input type="text" maxlength="240" style="width: 50%;" name="titulo">
+            <input type="text" maxlength="240" style="width: 50%;" name="titulo" placeholder="Edite o titulo aqui">
         </section>
          <section>
             <h5>Introdução</h5>
-            <textarea style="width: 100%; height: 90px;" name="introducao"></textarea>
+            <textarea style="width: 100%; height: 90px;" name="introducao"  placeholder="Edite a introdução aqui"></textarea>
         </section>
 
         <section>
             <h5>Desenvolvimento</h5>
-            <textarea style="width: 100%; height: 150px;" name="assunto"></textarea>
+            <textarea style="width: 100%; height: 150px;" name="assunto"  placeholder="Edite o assunto aqui"></textarea>
         </section>
         
         <section>
@@ -32,9 +33,10 @@
         
         <section>
             <h5>Conclusão</h5>
-            <textarea style="width: 100%; height: 50px;" name="conclusao"></textarea>
+            <textarea style="width: 100%; height: 50px;" name="conclusao"  placeholder="Edite a conclusão aqui"></textarea>
         </section>
         <button type="submit">Editar</button>
+        <span></span>
 
         </form>
     </div>
