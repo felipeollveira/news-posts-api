@@ -23,11 +23,11 @@ root.get('/api', return_get)
 root.get('/home', homePage)
 
 
-root.get('/posts', postPage)
-root.post('/posts', deleteCard)
+root.get('/posts/', postPage)
+root.post('/posts/', deleteCard)
 
 
-root.get('/posts/update/:title', (req, res) => {
+root.get('/posts/update/:title/', (req, res) => {
     const title = req.params.title;
     res.render('pages/edit', { title });
 });
