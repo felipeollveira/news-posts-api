@@ -18,7 +18,7 @@ server.use(express.static(__dirname + '/middles'));
 server.use(express.static(__dirname + '/public'));
 server.use(express.json())
 
-server.use('/static', express.static(join("views")))
+server.use('/static', express.static(join("views/")))
 
 server.use(cors());
 server.use(root) // rotas

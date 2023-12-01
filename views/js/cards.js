@@ -12,13 +12,13 @@ const fetchData = async () => {
   
       if (data.posts.length !== 0) {
         for (const post of data.posts) {
-          let id = post.post_id;
+          //let id = post.post_id;
           let titulo = post.titulo;
-          let assunto = post.assunto;
+          //let assunto = post.assunto;
           let conclusao = post.conclusao;
           let data = post.data;
-          let autor = post.autor;
-          let introducao = post.introducao;
+         // let autor = post.autor;
+          //let introducao = post.introducao;
 
           const cards = document.createElement("div")
           cards.setAttribute('class', 'cards')

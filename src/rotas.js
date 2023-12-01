@@ -2,11 +2,10 @@ const express = require('express');
 const root = express();
 root.use(express.json());
 root.use(express.urlencoded({ extended: true }));
-const knex = require('./sql/connect')
-
-const bodyParser = require('body-parser');
 root.set('view engine','ejs')
 
+// PROCURANDO PELA PASTA VIEWS no VERCEL
+root.set('views', path.join(__dirname, '..', 'views'));
 
 const { deleteCard, editPost } = require('./controls/modify');
 
