@@ -8,7 +8,7 @@ require('dotenv').config();
 
 
 const loginPage = (req, res) => {
-  if( req.session.logado === true) res.redirect('/home')
+  if( req.session.logado === true) res.redirect('/')
   else{
       res.render('pages/login')
 
@@ -27,9 +27,9 @@ const loginPage = (req, res) => {
       if (user && (await bcrypt.compare(senha, user.password))) {
         req.session.logado = true;
         req.session.login = login;
-        return res.status(200).redirect('/new');
+        return res.status(200).redirect('/');
       } else {
-        return res.redirect('/');
+        return res.redirect('/login');
       }
     } catch (error) {
       console.error(error);
@@ -42,7 +42,7 @@ const homePage =  (req, res) => {
     if (req.session.logado) {
       res.render('pages/home')
     } else {
-      return res.redirect('/');
+      return res.redirect('/login');
     }
   };
 
@@ -51,7 +51,7 @@ const homePage =  (req, res) => {
     if (req.session.logado) {
       res.render('pages/posts')
     } else {
-      return res.redirect('/');
+      return res.redirect('/login');
     }
   };
 

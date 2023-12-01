@@ -16,11 +16,11 @@ const auth = require('./middles/auth');
 const { post_go_db, return_get } = require('./controls/newpost');
 
 
-root.post('/', autLogin)
-root.get('/', loginPage)
-root.post('/new/' ,post_go_db )
+root.post('/login', autLogin)
+root.get('/login', loginPage)
+root.post('/' ,post_go_db )
 root.get('/api', return_get)
-root.get('/new/', homePage)
+root.get('/', homePage)
 
 
 root.get('/posts/', postPage)
