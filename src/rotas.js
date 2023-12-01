@@ -3,6 +3,7 @@ const root = express();
 root.use(express.json());
 root.use(express.urlencoded({ extended: true }));
 root.set('view engine','ejs')
+const path = require('path');
 
 // PROCURANDO PELA PASTA VIEWS no VERCEL
 root.set('views', path.join(__dirname, '..', 'views'));
