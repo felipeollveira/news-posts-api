@@ -31,15 +31,6 @@ const post_go_db = async (req, res, next) => {
     }
 };
 
-const return_get = async (req, res) => {
-    try {
-      const posts = await knex('post').select('*');
-      return res.status(200).json({ posts });
-    } catch (error) {
-      return res.status(500).json({ error: error });
-    }
-  }
-  
 
 
 
@@ -52,7 +43,5 @@ const return_get = async (req, res) => {
 
 module.exports = {
     post_go_db,
-    return_get,
-    
-
+  
 }

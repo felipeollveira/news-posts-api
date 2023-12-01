@@ -12,13 +12,12 @@ const { deleteCard, editPost } = require('./controls/modify');
 
 const { loginPage, autLogin, homePage, postPage, isAuthenticated } = require('./controls/users');
 
-const { post_go_db, return_get } = require('./controls/newpost');
+const { post_go_db} = require('./controls/newpost');
 
 
 root.post('/login', autLogin)
 root.get('/login', loginPage)
 
-root.get('/api' ,return_get)
 root.post('/' ,isAuthenticated ,post_go_db )
 root.get('/', isAuthenticated ,homePage)
 
