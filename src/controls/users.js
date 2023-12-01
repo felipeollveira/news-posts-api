@@ -6,6 +6,15 @@ const bcrypt = require('bcrypt');
 
 require('dotenv').config();
 
+const isAuthenticated = (req, res, next) => {
+  if (req.session.logado) {
+   
+    next();
+  } else {
+    res.redirect('/login');
+  }
+};
+
 
 const loginPage = (req, res) => {
   if( req.session.logado === true) res.redirect('/')
@@ -48,11 +57,7 @@ const homePage =  (req, res) => {
 
 
   const postPage =  (req, res) => {
-    if (req.session.logado) {
       res.render('pages/posts')
-    } else {
-      return res.redirect('/login');
-    }
   };
 
 
@@ -60,6 +65,7 @@ module.exports = {
     loginPage,
     autLogin,
     homePage,
-    postPage
+    postPage,
+    isAuthenticated
 
  }
