@@ -22,8 +22,8 @@ root.post('/' ,isAuthenticated ,post_go_db )
 root.get('/', isAuthenticated ,homePage)
 
 
-root.get('/posts/', isAuthenticated, postPage)
-root.post('/posts/',isAuthenticated, deleteCard)
+root.get('/posts/', postPage)
+root.post('/posts/', deleteCard)
 
 
 root.get('/posts/update/:title/', (req, res) => {
