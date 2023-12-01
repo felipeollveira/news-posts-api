@@ -19,7 +19,7 @@ const obterTituloDaURL = () => {
 
 const buscarPostNaAPI = async (tituloDoPost) => {
     try {
-        const response = await fetch('https://lovely-worm-tux.cyclic.app/api');
+        const response = await fetch('https://dark-gold-dog-yoke.cyclic.app');
         if (!response.ok) {
             throw new Error('Não foi possível obter os dados da API.');
         }
