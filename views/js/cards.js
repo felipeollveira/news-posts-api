@@ -2,12 +2,11 @@ const root = document.getElementById('root');
 
 const fetchData = async () => {
     try {
-      const response = await fetch('https://dark-gold-dog-yoke.cyclic.app');
-  
-      if (!response.ok) {
-        throw new Error('Não foi possível obter os dados da API.');
-      }
-  
+        const response = await fetch('https://dark-gold-dog-yoke.cyclic.app', {
+            method: 'GET',
+            mode: 'cors', // Adicione esta opção
+        });
+    
       const data = await response.json();
   
       if (data.posts.length !== 0) {

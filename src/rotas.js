@@ -18,15 +18,18 @@ const { post_go_db} = require('./controls/newpost');
 root.post('/login', autLogin)
 root.get('/login', loginPage)
 
-root.post('/' ,isAuthenticated ,post_go_db )
-root.get('/', isAuthenticated ,homePage)
+//rotas protegidas
+root.use(isAuthenticated)
+
+root.post('/'  ,post_go_db )
+root.get('/' ,homePage)
 
 
-root.get('/posts/', isAuthenticated, postPage)
+root.get('/posts/', postPage)
 root.post('/posts/', deleteCard)
 
 
-root.get('/posts/update/:title/', isAuthenticated, (req, res) => {
+root.get('/posts/update/:title/', (req, res) => {
     const title = req.params.title;
     res.render('pages/edit', { title });
 });
