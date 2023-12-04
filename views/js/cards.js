@@ -54,32 +54,41 @@ const fetchData = async () => {
 
 
 
-          imgDelete.addEventListener("click", function() {
-            let titulo = tituloElement.textContent;
-            let btn = prompt('Deseja excluir? S/N');
-
-            if (btn === 'S') {
-                fetch('/posts/', {
-                    method: 'POST',
-                    body: JSON.stringify({ titulo }),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Post excluído com sucesso');
-                    } else {
-                        console.error('Erro ao enviar a solicitação: ', response.status);
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao enviar a solicitação: ', error);
-                });
+          const confirmarExclusao = () => {
+            const titulo = tituloElement.textContent;
+            const confirmacao = prompt('Digite a primeira letra do titulo para excluir');
+            return { titulo, confirmacao };
+          };
+          
+          const handleExclusao = ({ titulo, confirmacao }) => {
+            if (confirmacao === titulo[0]) {
+              fetch('/posts/', {
+                method: 'POST',
+                body: JSON.stringify({ titulo }),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              })
+              .then(response => {
+                if (response.ok) {
+                  alert('Post excluído com sucesso');
+                } else {
+                  console.error('Erro ao enviar a solicitação: ', response.status);
+                }
+              })
+              .catch(error => {
+                console.error('Erro ao enviar a solicitação: ', error);
+              });
             } else {
-                alert('Exclusão cancelada');
+              alert('Exclusão cancelada');
             }
-        });
+          };
+          
+          imgDelete.addEventListener("click", function() {
+            const confirmacaoData = confirmarExclusao();
+            handleExclusao(confirmacaoData);
+          });
+          
 
 
             imgModify.addEventListener("click", function() {

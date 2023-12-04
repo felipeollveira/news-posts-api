@@ -3,7 +3,7 @@ const knex = require('../sql/connect')
 
 
 
-const deleteCard = async (req, res) => {
+const deleteCard = async (req, res, next) => {
     const { titulo } = req.body;
     //console.log(titulo)
     try {
@@ -31,7 +31,6 @@ const editPost = async (req, res) => {
         if (conclusao) updateValues.conclusao = conclusao;
 
         if (Object.keys(updateValues).length === 0) {
-            console.error('Nenhum valor foi fornecido para atualização.');
             return res.status(400).json({ mensagem: 'Nenhum valor foi fornecido para atualização.' });
         }
 

@@ -13,6 +13,7 @@ const { deleteCard, editPost } = require('./controls/modify');
 const { loginPage, autLogin, homePage, postPage, isAuthenticated } = require('./controls/users');
 
 const { post_go_db} = require('./controls/newpost');
+//const encerrarSessao = require('./middles/encerraSessao');
 
 
 root.get('/login', loginPage)
@@ -22,7 +23,7 @@ root.post('/login', autLogin)
 root.use(isAuthenticated)
 
 root.get('/' ,homePage)
-root.post('/'  ,post_go_db )
+root.post('/' ,post_go_db )
 
 
 root.get('/posts/', postPage)
