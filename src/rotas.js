@@ -15,14 +15,14 @@ const { loginPage, autLogin, homePage, postPage, isAuthenticated } = require('./
 const { post_go_db} = require('./controls/newpost');
 
 
-root.post('/login', autLogin)
 root.get('/login', loginPage)
+root.post('/login', autLogin)
 
 //rotas protegidas
 root.use(isAuthenticated)
 
-root.post('/'  ,post_go_db )
 root.get('/' ,homePage)
+root.post('/'  ,post_go_db )
 
 
 root.get('/posts/', postPage)

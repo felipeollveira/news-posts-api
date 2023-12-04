@@ -4,7 +4,7 @@ const fetchData = async () => {
     try {
         const response = await fetch('https://dark-gold-dog-yoke.cyclic.app', {
             method: 'GET',
-            mode: 'cors', // Adicione esta opção
+            mode: 'cors', 
         });
     
       const data = await response.json();
@@ -108,3 +108,8 @@ console.error(error);
 };
 
 fetchData();
+
+// Adiciona um atraso de 1 segundo após a conclusão da função fetchData
+setTimeout(() => {
+    console.log('Função fetchData concluída após 1 segundo de atraso.');
+}, 1000);

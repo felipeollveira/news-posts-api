@@ -36,6 +36,7 @@ const buscarPostNaAPI = async (tituloDoPost) => {
             console.log('Post não encontrado.');
         }
     } catch (error) {
+        window.location.url = '/'
         console.error(error);
     }
 };

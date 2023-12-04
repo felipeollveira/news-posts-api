@@ -8,7 +8,6 @@ require('dotenv').config();
 
 const isAuthenticated = (req, res, next) => {
   if (req.session.logado) {
-   
     next();
   } else {
     res.redirect('/login');
@@ -48,20 +47,12 @@ const loginPage = (req, res) => {
   
 
 const homePage =  (req, res) => {
-    if (req.session.logado) {
-      res.render('pages/home')
-    } else {
-      return res.redirect('/login');
-    }
+    res.render('pages/home')
   };
 
 
   const postPage =  (req, res) => {
-    if (req.session.logado) {
       res.render('pages/posts')
-    } else {
-      return res.redirect('/login');
-    }
   };
 
 
