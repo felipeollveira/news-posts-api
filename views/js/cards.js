@@ -1,8 +1,9 @@
 const root = document.getElementById('root');
+const apiUrl = '/api/posts';
 
 const fetchData = async () => {
     try {
-        const response = await fetch('https://dark-gold-dog-yoke.cyclic.app', {
+        const response = await fetch(apiUrl, {
             method: 'GET',
             mode: 'cors', 
         });
@@ -117,8 +118,3 @@ console.error(error);
 };
 
 fetchData();
-
-// Adiciona um atraso de 1 segundo após a conclusão da função fetchData
-setTimeout(() => {
-    console.log('Função fetchData concluída após 1 segundo de atraso.');
-}, 1000);

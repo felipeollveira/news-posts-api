@@ -14,32 +14,50 @@ const obterTituloDaURL = () => {
     return '';
 };
 
-
+//const jr = require('./scratch/posts.json')
 
 
 const buscarPostNaAPI = async (tituloDoPost) => {
+    const apiUrl = '/api/posts';
+  
     try {
-        const response = await fetch('https://dark-gold-dog-yoke.cyclic.app');
-        if (!response.ok) {
-            throw new Error('Não foi possível obter os dados da API.');
-        }
-
-        const data = await response.json();
-        const post = data.posts.find(post => post.titulo === tituloDoPost);
-
-        if (post) {
-            tituloInput.value = post.titulo;
-            introducaoTextarea.value = post.introducao;
-            assuntoTextarea.value = post.desenvolvimento;
-            conclusaoTextarea.value = post.conclusao;
-        } else {
-            console.log('Post não encontrado.');
-        }
+      const response = await fetch(apiUrl);
+  
+      if (!response.ok) {
+        throw new Error('Não foi possível obter os dados da API.');
+      }
+  
+      const data = await response.json();
+      const post = data.posts.find(post => post.titulo === tituloDoPost);
+  
+      if (post) {
+        preencherCamposDoFormulario(post);
+      } else {
+        console.log('Post não encontrado.');
+      }
     } catch (error) {
-        window.location.url = '/'
-        console.error(error);
+      exibirErro('Erro ao buscar o post na API.');
+      console.error(error);
     }
+  };
+  
+
+const preencherCamposDoFormulario = (post) => {
+    tituloInput.value = post.titulo;
+    introducaoTextarea.value = post.introducao;
+    assuntoTextarea.value = post.desenvolvimento;
+    conclusaoTextarea.value = post.conclusao;
 };
+
+const exibirErro = (mensagem) => {
+
+    console.error(mensagem);
+   
+    alert(mensagem);
+};
+
+
+
 
 const tituloDoPost = obterTituloDaURL();
 buscarPostNaAPI(tituloDoPost);
