@@ -1,5 +1,5 @@
 const root = document.getElementById('root');
-const apiUrl = __dirname + '/api/posts';
+const apiUrl =  '/api/posts';
 
 const fetchData = async () => {
     try {
