@@ -16,7 +16,8 @@ const { deleteCard, editPost } = require('./controls/modify');
 const { loginPage, autLogin, homePage, postPage, isAuthenticated } = require('./controls/users');
 
 const { post_go_db} = require('./controls/newpost');
-const { attjson } = require('./api/api');
+const { criarArquivoJSON } = require('./api/api');
+
 
 
 //const encerrarSessao = require('./middles/encerraSessao');
@@ -24,7 +25,27 @@ const { attjson } = require('./api/api');
 
 root.get('/login', loginPage)
 root.post('/login', autLogin)
+root.get('/api/posts', async (req, res) => {
+    try {
+      const filePath = path.join(__dirname, './scratch/posts.json');
+      const jsonData = await fs.readFile(filePath, 'utf8');
 
+      if (!jsonData.trim()) {
+        console.error('O arquivo JSON está vazio.');
+        res.status(500).json({ error: 'Erro ao obter dados da API.' });
+        return;
+      }
+
+      const posts = JSON.parse(jsonData);
+
+      
+
+      res.json({ posts });
+    } catch (error) {
+      console.error('Erro ao ler o arquivo JSON:', error);
+      res.status(500).json({ error: 'Erro ao obter dados da API.' });
+    }
+  });
 //rotas protegidas
 root.use(isAuthenticated)
 
@@ -36,24 +57,14 @@ root.get('/posts/', postPage)
 root.post('/posts/', deleteCard)
 
 
-root.get('/api/posts', async (req, res) => {
-    try {
-      const filePath = path.join(__dirname, './scratch/posts.json');
-      const jsonData = await fs.readFile(filePath, 'utf8');
-      const posts = JSON.parse(jsonData);
-      res.json({ posts });
-    } catch (error) {
-      console.error('Erro ao ler o arquivo JSON:', error);
-      res.status(500).json({ error: 'Erro ao obter dados da API.' });
-    }
-  });
+
 
 
 root.get('/posts/update/:title/', (req, res) => {
     const title = req.params.title;
     res.render('pages/edit', { title });
 });
-root.use(attjson)
+
 root.post('/posts/update/:title', editPost)
 
 

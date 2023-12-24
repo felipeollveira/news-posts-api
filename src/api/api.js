@@ -1,21 +1,27 @@
-const fs = require('fs').promises;
-const fetch = require('node-fetch');
-const path = require('path');
 
-const urlAPI = 'https://dark-gold-dog-yoke.cyclic.app';
+require('dotenv').config();
+
+const mongodbUri = process.env.MONGO_URI;
+const { MongoClient } = require('mongodb');
+const fs = require('fs').promises;
+const path = require('path');
 
 const buscarTodosOsPosts = async () => {
   try {
-    const response = await fetch(urlAPI);
+    const uri = mongodbUri;
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-    if (!response.ok) {
-      throw new Error('Não foi possível obter os dados da API.');
-    }
+    await client.connect();
 
-    const data = await response.json();
-    return data.posts;
+    const database = client.db('publicacoes');
+    const collection = database.collection('posts'); 
+    const posts = await collection.find({}).toArray();
+
+    client.close();
+
+    return posts;
   } catch (error) {
-    console.error(error);
+    console.error('Erro ao buscar dados do MongoDB:', error.message);
     throw error;
   }
 };
@@ -29,27 +35,34 @@ const criarArquivoJSON = async () => {
     const diretorio = path.join(__dirname, '../scratch');
     const caminhoArquivo = path.join(diretorio, 'posts.json');
 
-    // Cria o diretório se não existir
-    if(!diretorio){
+    // Verifica a existência do diretório
+    await fs.access(diretorio).catch(async () => {
+      // Se não existir, cria o diretório
       await fs.mkdir(diretorio, { recursive: true });
-      console.log('Arquivo JSON criado com sucesso.');
-    }
+      console.log('Diretório criado com sucesso.');
+    });
+
     // Escreve os dados no arquivo
     await fs.writeFile(caminhoArquivo, jsonData, 'utf8');
-    
+    console.log('Arquivo JSON criado com sucesso.');
   } catch (error) {
-    console.error('Erro ao criar o arquivo JSON:', error);
+    console.error('Erro ao criar o arquivo JSON:', error.message);
+    throw error;
   }
-
 };
 
-const attjson = (req, res, next) => {
-
+const attjson = async (req, res, next) => {
+  try {
     criarArquivoJSON();
-
-  next();
+    next();
+  } catch (error) {
+    res.status(500).json({ message: 'Erro no servidor ao criar o arquivo JSON.' });
+  }
 };
+
 
 module.exports = {
+  criarArquivoJSON,
   attjson
-}
+};
+

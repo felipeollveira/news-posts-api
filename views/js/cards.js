@@ -1,6 +1,7 @@
 const root = document.getElementById('root');
 const apiUrl =  '/api/posts';
 
+
 const fetchData = async () => {
     try {
         const response = await fetch(apiUrl, {
@@ -116,5 +117,16 @@ const fetchData = async () => {
 console.error(error);
 }
 };
+
+const socket = io();
+
+// Ouvir o evento postDeleted e realizar a atualização dinâmica
+socket.on('postDeleted', () => {
+  // Limpar os elementos existentes (opcional, dependendo da sua lógica)
+  root.innerHTML = '';
+
+  // Recarregar dados após exclusão
+  fetchData();
+});
 
 fetchData();
