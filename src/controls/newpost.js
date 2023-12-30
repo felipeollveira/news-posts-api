@@ -21,7 +21,7 @@ const post_go_db = async (req, res, next) => {
         }
 
         const newPost = await Post.create({ titulo, introducao, desenvolvimento, conclusao, data: timestamp, autor, images: imagem });
-
+  
         if (!newPost) return res.status(400).send({ message: 'Erro ao criar o post' });
 
         console.log(JSON.stringify(req.body.images));

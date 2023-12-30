@@ -1,7 +1,7 @@
 
-const { knex } = require('../sql/connect')
+const {client} = require('../sql/connect')
 const bcrypt = require('bcrypt');
-const {criarArquivoJSON} = require('../api/api')
+const Post = require('../sql/models/posts')
 
 
 
@@ -25,35 +25,47 @@ const loginPage = (req, res) => {
   }
 
 
-
   const autLogin = async (req, res) => {
-    try {
-      const login = req.body.login;
-      const senha = req.body.senha;
+    const { login, senha } = req.body;
   
-      const user = await knex('users').where({ login: login }).first();
+    try {
+      // Validar entradas
+      if (!login || !senha) {
+        return res.status(400).send('Credenciais incompletas');
+      }
+
+      const db = client.db('posts');
+      const collection = db.collection('admins');
+
+      const user = await collection.findOne({ name: login });
   
       if (user && (await bcrypt.compare(senha, user.password))) {
         req.session.logado = true;
         req.session.login = login;
+
+        await client.close();
+  
         return res.status(200).redirect('/');
       } else {
-        return res.redirect('/login');
+        return res.status(401).send('Falha na autenticação');
       }
     } catch (error) {
-      console.error(error);
-      return res.status(401);
+      console.error('Erro durante a autenticação:', error);
+  
+      return res.status(500).send('Falha na autenticação');
     }
   };
+  
   
 
 const homePage =  (req, res) => {
     res.render('pages/home')
   };
 
-
+ 
   const postPage =  (req, res) => {
-      res.render('pages/posts')
+    res.render('pages/posts')
+      
   };
 
 

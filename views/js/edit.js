@@ -18,7 +18,7 @@ const obterTituloDaURL = () => {
 
 
 const buscarPostNaAPI = async (tituloDoPost) => {
-    const apiUrl = '/api/posts';
+    const apiUrl = 'https://db-pubs.vercel.app';
   
     try {
       const response = await fetch(apiUrl);

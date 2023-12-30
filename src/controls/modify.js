@@ -1,33 +1,7 @@
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
-const { criarArquivoJSON } = require('../api/api');
+
+const obterEAtualizarVersao = require('../sql/atualizaVersao');
 const Post = require('../sql/models/posts');
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
-
-// Configuração do Socket.IO
-io.on('connection', (socket) => {
-  console.log('Novo cliente conectado');
-
-  // Evento para deletar um post
-  socket.on('deletePost', async (titulo) => {
-    try {
-      const resultado = await Post.deleteOne({ titulo: titulo });
-
-      if (resultado.deletedCount > 0) {
-        io.emit('postDeleted'); // Emitir evento WebSocket
-        criarArquivoJSON();
-      } else {
-        console.log('Nenhum documento encontrado para exclusão.');
-      }
-    } catch (error) {
-      console.error('Erro no servidor ao excluir documento:', error);
-    }
-  });
-});
 
 // Função para deletar um post via rota HTTP
 const deleteCard = async (req, res, next) => {
@@ -37,7 +11,7 @@ const deleteCard = async (req, res, next) => {
     const resultado = await Post.deleteOne({ titulo: titulo });
 
     if (resultado.deletedCount > 0) {
-      criarArquivoJSON();
+      obterEAtualizarVersao()
       return res.status(200).json({ message: 'Documento excluído com sucesso.' });
     } else {
       return res.status(404).json({ message: 'Nenhum documento encontrado para exclusão.' });
@@ -64,10 +38,12 @@ const editPost = async (req, res) => {
       return res.status(400).json({ mensagem: 'Nenhum valor foi fornecido para atualização.' });
     }
 
-    const result = await Post.updateOne({ titulo: tituloSearch }, { $set: updateValues });
+    const result = await Post.updateOne({ titulo: tituloSearch }, { $set: updateValues }).maxTimeMS(30000); 
 
     if (result.nModified > 0) {
-      criarArquivoJSON();
+      // A atualização ocorreu com sucesso, você pode realizar outras ações se necessário.
+      obterEAtualizarVersao();
+
       return res.status(200).json({ mensagem: 'Post atualizado com sucesso.' });
     } else {
       console.error('Nenhuma linha foi atualizada.');
@@ -78,6 +54,7 @@ const editPost = async (req, res) => {
     return res.status(500).json({ mensagem: 'Erro ao editar o post.' });
   }
 };
+
 
 module.exports = {
   deleteCard,

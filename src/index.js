@@ -4,6 +4,8 @@ const session = require('express-session');
 const server = express();
 const cors = require('cors');
 const { join } = require('path');
+const { run } = require('./sql/connect');
+const obterEAtualizarVersao = require('./sql/atualizaVersao');
 const sessionSecret = process.env.private_key
 
 
@@ -25,8 +27,21 @@ server.use(root) // rotas
 
 // Iniciand o servidor
 const PORT = process.env.PORT || 3000; 
-server.listen(PORT, () => {
-  console.log(`Servidor iniciado na porta ${PORT}`);
-});
 
-console.log(`http://localhost:${PORT}/`)
+
+run().then(() => {
+  server.listen(3000, () => {
+    console.log(`Servidor Express iniciado na porta ${PORT}`); 
+    
+  });
+}).catch(console.dir);
+
+
+
+
+/*
+  server.listen(3000, () => {
+    console.log(`Servidor Express iniciado na porta ${PORT}`); 
+    
+  });
+*/

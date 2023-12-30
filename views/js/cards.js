@@ -1,5 +1,6 @@
 const root = document.getElementById('root');
-const apiUrl =  '/api/posts';
+const apiUrl =  'https://db-pubs.vercel.app';
+
 
 
 const fetchData = async () => {
@@ -8,7 +9,8 @@ const fetchData = async () => {
             method: 'GET',
             mode: 'cors', 
         });
-    
+
+
       const data = await response.json();
   
       if (data.posts.length !== 0) {

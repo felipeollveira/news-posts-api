@@ -1,26 +1,28 @@
-const knex = require('knex');
-const mongoose = require('mongoose');
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 
-// Knex for PostgreSQL
-const postgresknex = knex({
-    client: 'pg',
-    connection: {
-        user: 'lbrovmjk',
-        host: 'isabelle.db.elephantsql.com',
-        database: 'lbrovmjk',
-        password: 'T28jE2cC6AmzN6OFpBsc5X3DUYY95eAm',
-    },
+const client = new MongoClient(process.env.MONGODB_URI, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
 });
 
-// Mongoose for MongoDB
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    console.log('MongoDb connected');
-}).catch((error) => {
-    console.log(error);
-});
+async function run() {
+  try {
+    await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log("Você se conectou com sucesso ao MongoDB!");
+  } catch (error) {
+    console.error('Erro ao conectar ao MongoDB:', error.message);
+
+  }
+}
+
 
 module.exports = {
-    knex: postgresknex,
-    mongoose: mongoose,
-};
+    run,
+    client,
+  };
