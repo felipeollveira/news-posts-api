@@ -8,14 +8,14 @@ const client = new MongoClient(uri);
 
 
 const isAuthenticated = (req, res, next) => {
-  console.log('Middleware isAuthenticated acionado');
-  const token = req.cookies.jwt; // Assumindo que o token está armazenado em um cookie chamado "jwt"
+  //console.log('Middleware isAuthenticated acionado');
+  const token = req.cookies.jwt; 
 
   if (token) {
     jwt.verify(token, process.env.private_key, (err, decoded) => {
       if (err) {
         console.error('Erro na verificação do token:', err);
-        res.clearCookie('jwt'); // Limpar o cookie para evitar loops persistentes
+        res.clearCookie('jwt'); 
         res.redirect('/login');
       } else {
         next();
