@@ -10,8 +10,9 @@ const isAuthenticated = (req, res, next) => {
   const token = req.cookies.jwt;
 
   if (token) {
-    jwt.verify(token, process.env.private_key, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
+      
         res.redirect('/login');
       } else {
         next();
@@ -21,6 +22,7 @@ const isAuthenticated = (req, res, next) => {
     res.redirect('/login');
   }
 };
+
 
 const loginPage = (req, res) => {
   if (req.cookies.jwt) res.redirect('/');
