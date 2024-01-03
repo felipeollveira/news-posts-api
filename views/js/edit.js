@@ -28,7 +28,7 @@ const buscarPostNaAPI = async (tituloDoPost) => {
       }
   
       const data = await response.json();
-      const post = data.posts.find(post => post.titulo === tituloDoPost);
+      const post = data.posts.posts.find(post => post.titulo === tituloDoPost);
   
       if (post) {
         preencherCamposDoFormulario(post);

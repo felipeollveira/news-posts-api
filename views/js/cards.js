@@ -14,7 +14,7 @@ const fetchData = async () => {
       const data = await response.json();
   
       if (data.posts.length !== 0) {
-        for (const post of data.posts) {
+        for (const post of data.posts.posts) {
           //let id = post.post_id;
           let titulo = post.titulo;
           //let assunto = post.assunto;
@@ -120,15 +120,5 @@ console.error(error);
 }
 };
 
-const socket = io();
-
-// Ouvir o evento postDeleted e realizar a atualização dinâmica
-socket.on('postDeleted', () => {
-  // Limpar os elementos existentes (opcional, dependendo da sua lógica)
-  root.innerHTML = '';
-
-  // Recarregar dados após exclusão
-  fetchData();
-});
 
 fetchData();

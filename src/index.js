@@ -7,11 +7,11 @@ const { join } = require('path');
 const { run } = require('./sql/connect');
 const obterEAtualizarVersao = require('./sql/atualizaVersao');
 const sessionSecret = process.env.private_key
+const cookieParser = require('cookie-parser')
 
 
 
-
-
+server.use(cookieParser());
 
 server.use(session({ secret: sessionSecret, resave: true, saveUninitialized: true }));
 
@@ -28,7 +28,7 @@ server.use(root) // rotas
 // Iniciand o servidor
 const PORT = process.env.PORT || 3000; 
 
-
+/*
 run().then(() => {
   server.listen(3000, () => {
     console.log(`Servidor Express iniciado na porta ${PORT}`); 
@@ -36,12 +36,11 @@ run().then(() => {
   });
 }).catch(console.dir);
 
+*/
 
 
 
-/*
   server.listen(3000, () => {
     console.log(`Servidor Express iniciado na porta ${PORT}`); 
     
   });
-*/

@@ -1,6 +1,4 @@
 const autor = 'felipeoliveira'
-
-const { criarArquivoJSON } = require('../api/api');
 const Post = require('../sql/models/posts')
 
 const post_go_db = async (req, res, next) => {

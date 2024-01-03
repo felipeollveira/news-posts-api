@@ -1,79 +1,74 @@
-
-const {client} = require('../sql/connect')
+const { MongoClient } = require('mongodb');
 const bcrypt = require('bcrypt');
-const Post = require('../sql/models/posts')
-
-
-
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri);
+
 const isAuthenticated = (req, res, next) => {
-  if (req.session.logado) {
-    next();
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, process.env.private_key, (err, decoded) => {
+      if (err) {
+        res.redirect('/login');
+      } else {
+        next();
+      }
+    });
   } else {
     res.redirect('/login');
   }
 };
 
-
 const loginPage = (req, res) => {
-  if( req.session.logado === true) res.redirect('/')
-  else{
-      res.render('pages/login')
+  if (req.cookies.jwt) res.redirect('/');
+  else res.render('pages/login');
+};
 
-    };
-  }
+const autLogin = async (req, res) => {
+  const { login, senha } = req.body;
 
+  try {
+    await client.connect();
 
-  const autLogin = async (req, res) => {
-    const { login, senha } = req.body;
-  
-    try {
-      // Validar entradas
-      if (!login || !senha) {
-        return res.status(400).send('Credenciais incompletas');
-      }
-
-      const db = client.db('posts');
-      const collection = db.collection('admins');
-
-      const user = await collection.findOne({ name: login });
-  
-      if (user && (await bcrypt.compare(senha, user.password))) {
-        req.session.logado = true;
-        req.session.login = login;
-
-        await client.close();
-  
-        return res.status(200).redirect('/');
-      } else {
-        return res.status(401).send('Falha na autenticação');
-      }
-    } catch (error) {
-      console.error('Erro durante a autenticação:', error);
-  
-      return res.status(500).send('Falha na autenticação');
+    if (!login || !senha) {
+      return res.status(400).send('Credenciais incompletas');
     }
-  };
-  
-  
 
-const homePage =  (req, res) => {
-    res.render('pages/home')
-  };
+    const usersCollection = client.db('posts').collection('admins');
+    const user = await usersCollection.findOne({ name: login });
 
- 
-  const postPage =  (req, res) => {
-    res.render('pages/posts')
+    if (user && (await bcrypt.compare(senha, user.password))) {
+      const token = jwt.sign({ userId: user._id }, process.env.private_key, { expiresIn: '600' });
+
+      res.cookie('jwt', token, { httpOnly: true, maxAge: 600 * 1000 });
       
-  };
+      res.status(200).redirect('/');
+    } else {
+      return res.status(401).send('Falha na autenticação');
+    }
+  } catch (error) {
+    console.error('Erro durante a autenticação:', error);
+    return res.status(500).send('Falha na autenticação');
+  } finally {
+    await client.close();
+  }
+};
 
+const homePage = (req, res) => {
+  res.render('pages/home');
+};
+
+const postPage = (req, res) => {
+  res.render('pages/posts');
+};
 
 module.exports = {
-    loginPage,
-    autLogin,
-    homePage,
-    postPage,
-    isAuthenticated
-
- }
+  loginPage,
+  autLogin,
+  homePage,
+  postPage,
+  isAuthenticated,
+};
