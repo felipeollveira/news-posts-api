@@ -6,28 +6,33 @@ require('dotenv').config();
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
+
 const isAuthenticated = (req, res, next) => {
-  const token = req.cookies.jwt;
+  console.log('Middleware isAuthenticated acionado');
+  const token = req.cookies.jwt; // Assumindo que o token está armazenado em um cookie chamado "jwt"
 
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.private_key, (err, decoded) => {
       if (err) {
-      
+        console.error('Erro na verificação do token:', err);
+        res.clearCookie('jwt'); // Limpar o cookie para evitar loops persistentes
         res.redirect('/login');
       } else {
         next();
       }
     });
   } else {
-    res.redirect('/login');
+    res.redirect('/');
   }
 };
+
 
 
 const loginPage = (req, res) => {
   if (req.cookies.jwt) res.redirect('/');
   else res.render('pages/login');
 };
+
 
 const autLogin = async (req, res) => {
   const { login, senha } = req.body;
@@ -43,7 +48,8 @@ const autLogin = async (req, res) => {
     const user = await usersCollection.findOne({ name: login });
 
     if (user && (await bcrypt.compare(senha, user.password))) {
-      const token = jwt.sign({ userId: user._id }, process.env.private_key, { expiresIn: '600' });
+      const token = jwt.sign({ userId: user._id }, process.env.private_key, { expiresIn: '1h', algorithm: 'HS256' });
+
 
       res.cookie('jwt', token, { httpOnly: true, maxAge: 600 * 1000 });
       

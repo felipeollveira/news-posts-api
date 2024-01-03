@@ -5,7 +5,7 @@ root.use(express.urlencoded({ extended: true }));
 root.set('view engine','ejs')
 const path = require('path');
 
-const fs = require('fs').promises;
+
 
 
 // PROCURANDO PELA PASTA VIEWS no VERCEL
@@ -25,6 +25,7 @@ const { post_go_db} = require('./controls/newpost');
 
 root.get('/login', loginPage)
 root.post('/login', autLogin)
+
 //rotas protegidas
 root.use(isAuthenticated)
 
