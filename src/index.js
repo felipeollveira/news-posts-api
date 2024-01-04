@@ -4,8 +4,7 @@ const session = require('express-session');
 const server = express();
 const cors = require('cors');
 const { join } = require('path');
-const { run } = require('./sql/connect');
-const obterEAtualizarVersao = require('./sql/atualizaVersao');
+
 const sessionSecret = process.env.private_key
 const cookieParser = require('cookie-parser')
 

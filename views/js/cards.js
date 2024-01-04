@@ -5,14 +5,13 @@ const apiUrl =  'https://db-pubs.vercel.app';
 
 const fetchData = async () => {
     try {
-        const response = await fetch(apiUrl, {
-            method: 'GET',
-            mode: 'cors', 
-        });
 
-
-      const data = await response.json();
+      const cache = await caches.open('data-cache');
+      const cachedResponse = await cache.match(apiUrl);
   
+      let data = cachedResponse ? await cachedResponse.json() : null;
+  
+
       if (data.posts.length !== 0) {
         for (const post of data.posts.posts) {
           let titulo = post.titulo;

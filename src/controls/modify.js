@@ -1,5 +1,4 @@
 
-const obterEAtualizarVersao = require('../sql/atualizaVersao');
 const Post = require('../sql/models/posts');
 
 

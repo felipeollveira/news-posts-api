@@ -21,13 +21,11 @@ const buscarPostNaAPI = async (tituloDoPost) => {
     const apiUrl = 'https://db-pubs.vercel.app';
   
     try {
-      const response = await fetch(apiUrl);
+      const cache = await caches.open('data-cache');
+      const cachedResponse = await cache.match(apiUrl);
   
-      if (!response.ok) {
-        throw new Error('Não foi possível obter os dados da API.');
-      }
-  
-      const data = await response.json();
+      let data = cachedResponse ? await cachedResponse.json() : null;
+
       const post = data.posts.posts.find(post => post.titulo === tituloDoPost);
   
       if (post) {

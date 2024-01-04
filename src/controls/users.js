@@ -53,7 +53,7 @@ const autLogin = async (req, res) => {
     const user = await usersCollection.findOne({ name: login });
 
     if (user && (await bcrypt.compare(senha, user.password))) {
-      const token = generateAuthToken(user._id); // Token com tempo padrão (1h)
+      const token = generateAuthToken(user._id); 
 
       res.cookie('jwt', token, { httpOnly: true, maxAge: 600 * 1000 });
       res.status(200).redirect('/');

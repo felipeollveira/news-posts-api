@@ -10,11 +10,8 @@ const path = require('path');
 
 // PROCURANDO PELA PASTA VIEWS no VERCEL
 root.set('views', path.join(__dirname, '..', 'views'));
-
 const { deleteCard, editPost } = require('./controls/modify');
-
 const { loginPage, autLogin, homePage, postPage, isAuthenticated } = require('./controls/users');
-
 const { post_go_db} = require('./controls/newpost');
 
 
