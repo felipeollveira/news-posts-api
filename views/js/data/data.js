@@ -1,24 +1,16 @@
-
-
 const urlApi = 'https://db-pubs.vercel.app';
-const cacheName = 'data-cache';
-
-
+/*
 const fetchAndCacheData = async () => {
+  const cacheName = `data-cache-${Date.now()}`;
+
   try {
-    // Abrir o cache
+    // Limpar a cache existente
+    await limparCache();
+
+    // Abrir a nova cache
     const cache = await caches.open(cacheName);
 
-    // Verificar se os dados já estão no cache
-    const cachedResponse = await cache.match(new Request(urlApi));
-
-    if (cachedResponse) {
-      const data = await cachedResponse.json();
-      console.log('Dados recuperados do cache (data-cache).');
-      return data;
-    }
-
-    // Se os dados não estão no cache, buscar da API
+    // Fetch para obter os dados da API
     const response = await fetch(urlApi);
 
     if (!response.ok) {
@@ -28,10 +20,10 @@ const fetchAndCacheData = async () => {
     // Converter a resposta em JSON
     const data = await response.json();
 
-    // Armazenar a resposta da API no cache
-    await cache.put(new Request(urlApi), new Response(JSON.stringify(data)));
+    // Armazenar a resposta da API na nova cache com um novo ETag
+    await cache.put(new Request(urlApi), new Response(JSON.stringify(data), { headers: { 'ETag': response.headers.get('ETag') } }));
 
-    console.log('Dados da API armazenados no cache (data-cache) com sucesso.');
+    console.log(`Dados da API armazenados em uma nova cache (${cacheName}) com sucesso.`);
     return data;
   } catch (error) {
     console.error('Erro ao buscar ou armazenar dados:', error.message);
@@ -39,5 +31,45 @@ const fetchAndCacheData = async () => {
   }
 };
 
-// Chame a função para buscar e armazenar os dados no cache
+// Função para limpar a cache
+const limparCache = async () => {
+  try {
+    const cacheKeys = await caches.keys();
+    await Promise.all(cacheKeys.map(async (cacheKey) => {
+      if (cacheKey.includes('data-cache')) {
+        await caches.delete(cacheKey);
+        console.log(`Cache ${cacheKey} excluída com sucesso.`);
+      }
+    }));
+  } catch (error) {
+    console.error('Erro ao excluir o cache:', error);
+  }
+};
+
+
+// Chama a função para buscar e armazenar dados
 fetchAndCacheData();
+
+
+const visualizarCache = async () => {
+  try {
+    const cache = await caches.open(`data-cache-${Date.now()}`);
+    const keys = await cache.keys();
+
+    console.log('Chaves na cache:');
+    keys.forEach((key) => console.log(key.url));
+
+    console.log('\nPosts na cache:');
+    for (const key of keys) {
+      const response = await cache.match(key);
+      const data = await response.json();
+      console.log(data);
+    }
+  } catch (error) {
+    console.error('Erro ao visualizar a cache:', error);
+  }
+};
+
+// Chama a função para visualizar o cache
+visualizarCache();
+*/

@@ -18,9 +18,8 @@ const buscarPostNaAPI = async (tituloDoPost) => {
     const apiUrl = 'https://db-pubs.vercel.app';
   
     try {
-      const cache = await caches.open('data-cache');
-      const cachedResponse = await cache.match(apiUrl);
-  
+      
+      const cachedResponse = await fetch(apiUrl);
       let data = cachedResponse ? await cachedResponse.json() : null;
 
       const post = data.posts.posts.find(post => post.titulo === tituloDoPost);

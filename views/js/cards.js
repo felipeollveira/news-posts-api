@@ -6,16 +6,15 @@ const apiUrl =  'https://db-pubs.vercel.app';
 const fetchData = async () => {
     try {
 
-      const cache = await caches.open('data-cache');
-      const cachedResponse = await cache.match(apiUrl);
-  
+      const cachedResponse = await fetch(apiUrl);
       let data = cachedResponse ? await cachedResponse.json() : null;
+      
   
 
       if (data.posts.length !== 0) {
         for (const post of data.posts.posts) {
           let titulo = post.titulo;
-          let data = post.data;
+          let datapost = post.data;
 
 
           const cards = document.createElement("div")
@@ -26,7 +25,7 @@ const fetchData = async () => {
           tituloElement.textContent = titulo;
 
           let dataElement = document.createElement("h5");
-          dataElement.textContent = "Data: " + data.substring(0,4);
+          dataElement.textContent = "Data: " + datapost.substring(0,4);
 
           let imgDelete = document.createElement('img')
           imgDelete.setAttribute('src','/img/delete.png')
