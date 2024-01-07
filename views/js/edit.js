@@ -14,9 +14,6 @@ const obterTituloDaURL = () => {
     return '';
 };
 
-//const jr = require('./scratch/posts.json')
-
-
 const buscarPostNaAPI = async (tituloDoPost) => {
     const apiUrl = 'https://db-pubs.vercel.app';
   

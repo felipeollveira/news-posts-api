@@ -13,6 +13,7 @@ root.set('views', path.join(__dirname, '..', 'views'));
 const { deleteCard, editPost } = require('./controls/modify');
 const { loginPage, autLogin, homePage, postPage, isAuthenticated } = require('./controls/users');
 const { post_go_db} = require('./controls/newpost');
+const { run } = require('./sql/connect');
 
 
 
@@ -30,18 +31,17 @@ root.use(isAuthenticated)
 root.get('/' ,homePage)
 root.post('/' ,post_go_db)
 
+
 root.get('/posts/', postPage)
-root.post('/posts/', deleteCard)
-
-
-
-
 
 root.get('/posts/update/:title/', (req, res) => {
     const title = req.params.title;
     res.render('pages/edit', { title });
 });
 
+//root.use(run)
+
+root.post('/posts/', deleteCard)
 root.post('/posts/update/:title', editPost)
 
 

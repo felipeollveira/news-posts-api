@@ -27,10 +27,12 @@ const postSchema = new mongoose.Schema({
         required: true,
     },
     images: {
-        type: String, 
+        type: Buffer,
     },
+    
 });
 
-const Post = mongoose.model('Post', postSchema);
+const Post = mongoose.model('Post', postSchema, 'posts', { versionKey: false });  
+
 
 module.exports = Post;

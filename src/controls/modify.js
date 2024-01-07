@@ -2,6 +2,7 @@
 const Post = require('../sql/models/posts');
 
 
+
 // Função para deletar um post via rota HTTP
 const deleteCard = async (req, res, next) => {
   const { titulo } = req.body;
@@ -10,7 +11,7 @@ const deleteCard = async (req, res, next) => {
     const resultado = await Post.deleteOne({ titulo: titulo });
 
     if (resultado.deletedCount > 0) {
-      obterEAtualizarVersao()
+      await attVersion()
       return res.status(200).json({ message: 'Documento excluído com sucesso.' });
     } else {
       return res.status(404).json({ message: 'Nenhum documento encontrado para exclusão.' });
@@ -41,7 +42,7 @@ const editPost = async (req, res) => {
 
     if (result.nModified > 0) {
       // A atualização ocorreu com sucesso, você pode realizar outras ações se necessário.
-      obterEAtualizarVersao();
+      await attVersion()
 
       return res.status(200).json({ mensagem: 'Post atualizado com sucesso.' });
     } else {

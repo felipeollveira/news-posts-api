@@ -1,36 +1,64 @@
-const autor = 'felipeoliveira'
-const Post = require('../sql/models/posts')
+const { MongoClient } = require('mongodb');
+const Post = require('../sql/models/posts');
+const { notification } = require('./notifcation');
+const { attVersion } = require('./version');
+require('dotenv').config();
+
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri);
 
 const post_go_db = async (req, res, next) => {
-    const titulo = req.body.titulo;
-    const introducao = req.body.introducao;
-    const desenvolvimento = req.body.assunto;
-    const conclusao = req.body.conclusao;
-    const imagem = req.body.images;
+    const { titulo, introducao, assunto, conclusao, images } = req.body;
     const timestamp = new Date().toISOString();
+    const autor = process.env.AUTOR || 'felipeoliveira';
 
     try {
-        if (!titulo || !desenvolvimento || !conclusao || !introducao) return res.status(401).send({ message: 'Dados inválidos' });
+        await client.connect();
 
-        const existsTitulo = await Post.findOne({ titulo });
+        const pubCollection = client.db('posts').collection('pubs');
 
-        if (existsTitulo) {
-            return res.status(401).json({ mensagem: 'Uma publicação já foi feita com esse mesmo título!' });
-        }
+        // Log dos dados antes da inserção
+        console.log('Dados a serem inseridos:', {
+            titulo,
+            introducao,
+            desenvolvimento: assunto,
+            conclusao,
+            data: timestamp,
+            autor,
+            images,
+        });
 
-        const newPost = await Post.create({ titulo, introducao, desenvolvimento, conclusao, data: timestamp, autor, images: imagem });
-  
-        if (!newPost) return res.status(400).send({ message: 'Erro ao criar o post' });
+        // Operação de inserção diretamente na coleção
+        const result = await pubCollection.insertOne({
+            titulo,
+            introducao,
+            desenvolvimento: assunto,
+            conclusao,
+            data: timestamp,
+            autor,
+            images,
+        });
 
-        console.log(JSON.stringify(req.body.images));
+        console.log('Novo post criado com imagens:', images);
+        await attVersion()
         res.status(204).send({ message: 'Publicado!' });
-        criarArquivoJSON()
         next();
     } catch (error) {
-        console.error(error);
-        return res.status(500).send({ message: 'Erro no servidor' });
+        console.error('Erro na criação do post:', error);
+        return res.status(500).send({ message: 'Erro no servidor', error: error.message });
+    } finally {
+        try {
+            await client.close();
+        } catch (error) {
+            console.error('Erro ao fechar a conexão com o banco de dados:', error);
+        }
     }
 };
+
+
+
+
+
 
 module.exports = {
     post_go_db,
