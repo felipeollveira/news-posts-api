@@ -25,6 +25,7 @@
 
 /* Estilos para a seção principal */
 .formatos {
+  padding: 5px;
   gap: 5px;
   justify-content: center;
   align-items: center;

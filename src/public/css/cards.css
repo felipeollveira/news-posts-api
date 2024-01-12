@@ -3,6 +3,7 @@
     flex-direction: column-reverse;
     gap: 12px; 
     overflow: auto;
+    
 }
 
 .cards{
@@ -11,8 +12,10 @@
     color: rgb(205, 205, 205);
     align-content: center;
     align-items: center;
+
     border: 1px solid var(--cor-borda);
     background-color: var(--background-fl);
+    padding: 10px;
    
 }
 
@@ -21,7 +24,15 @@ body{
 }
 
 .titulos{
-    display: flex;
+    display: grid;
+    align-items: center;
+}
+.titulos h6{
+    font-size: 12pt;
+    color: rgba(255, 255, 255, 0.147);
+}
+.titulos h6:before{
+    content: "Publicado em ";
 }
 
 .icons{

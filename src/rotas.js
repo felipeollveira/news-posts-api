@@ -29,7 +29,8 @@ root.use(isAuthenticated)
 
 
 root.get('/' ,homePage)
-root.post('/' ,post_go_db)
+root.post('/', post_go_db);
+
 
 
 root.get('/posts/', postPage)

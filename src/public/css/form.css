@@ -6,7 +6,7 @@ background-color: var(--background);
 }
 
 main {
-
+    padding: 10px;
     display: grid;
     gap:1%;
     grid-template-columns: 75% 25%;
@@ -28,6 +28,14 @@ main {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .createpost h1{
+    font-size: 24px;
+    text-align: left;
+    color: var(--colorsystem);
+    font-weight: 700;
+    margin-top: 5px;
   }
   
   /* Estilos para os campos de entrada de texto */

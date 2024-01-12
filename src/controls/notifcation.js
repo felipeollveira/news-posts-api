@@ -2,7 +2,7 @@ require('dotenv').config();
 
 
 const notification = async () => {
-   const url = 'http://localhost:4000';
+   const url = 'https://db-pubs.vercel.app';
     try {
         const response = await fetch(url, {
             method: 'POST',

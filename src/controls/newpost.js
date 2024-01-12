@@ -17,7 +17,7 @@ const post_go_db = async (req, res, next) => {
 
         const pubCollection = client.db('posts').collection('pubs');
 
-        // Log dos dados antes da inserção
+        /*
         console.log('Dados a serem inseridos:', {
             titulo,
             introducao,
@@ -27,7 +27,7 @@ const post_go_db = async (req, res, next) => {
             autor,
             images,
         });
-
+        */
         // Operação de inserção diretamente na coleção
         const result = await pubCollection.insertOne({
             titulo,
@@ -39,7 +39,7 @@ const post_go_db = async (req, res, next) => {
             images,
         });
 
-        console.log('Novo post criado com imagens:', images);
+        //console.log('Novo post criado com imagens:', images);
         await attVersion()
         res.status(204).send({ message: 'Publicado!' });
         next();

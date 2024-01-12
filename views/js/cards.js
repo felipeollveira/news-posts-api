@@ -24,8 +24,11 @@ const fetchData = async () => {
           tituloElement.setAttribute('class', 'cardtitle')
           tituloElement.textContent = titulo;
 
-          let dataElement = document.createElement("h5");
-          dataElement.textContent = "Data: " + datapost.substring(0,4);
+          let dataElement = document.createElement("h6");
+          let dataDezChar = datapost.substring(0,10);
+          const dataCorreta = dataDezChar.split('-').reverse().join('/');
+          dataElement.textContent = dataCorreta
+
 
           let imgDelete = document.createElement('img')
           imgDelete.setAttribute('src','/img/delete.png')
