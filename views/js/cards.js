@@ -12,7 +12,7 @@ const fetchData = async () => {
   
 
       if (data.posts.length !== 0) {
-        for (const post of data.posts.posts) {
+        for (const post of data.posts) {
           let titulo = post.titulo;
           let datapost = post.data;
 

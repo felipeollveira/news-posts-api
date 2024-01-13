@@ -1,4 +1,4 @@
-
+const { attVersion } = require('./version');
 const Post = require('../sql/models/posts');
 
 

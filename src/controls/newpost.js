@@ -1,6 +1,6 @@
 const { MongoClient } = require('mongodb');
 const Post = require('../sql/models/posts');
-const { notification } = require('./notifcation');
+
 const { attVersion } = require('./version');
 require('dotenv').config();
 
