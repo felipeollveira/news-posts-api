@@ -26,7 +26,7 @@ const exibirCamadaCinza = (mensagem, cor, opacity) => {
   camadaCinza.style.width = '100%';
   camadaCinza.style.height = '100%';
   camadaCinza.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`; 
-  camadaCinza.style.zIndex = '9999';
+  camadaCinza.style.zIndex = '1';
   camadaCinza.style.display = 'flex';
   camadaCinza.style.alignItems = 'center';
   camadaCinza.style.justifyContent = 'center';
@@ -49,7 +49,7 @@ const removerCamadaCinza = () => {
 };
 
 const buscarPostNaAPI = async (tituloDoPost) => {
-  exibirCamadaCinza('Buscando post...','white','0.5'); 
+  exibirCamadaCinza('','white','0.5'); 
 
   const apiUrl = 'https://db-pubs.vercel.app';
 

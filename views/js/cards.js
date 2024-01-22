@@ -1,16 +1,44 @@
 const root = document.getElementById('root');
 const apiUrl =  'https://db-pubs.vercel.app';
 
+const exibirCamadaCinza = (mensagem, corMensagem, opacidadeFundo) => {
+  const camadaCinza = document.createElement('div');
+  camadaCinza.className = 'camada-cinza';
+  camadaCinza.style.position = 'fixed';
+  camadaCinza.style.top = '0';
+  camadaCinza.style.left = '0';
+  camadaCinza.style.width = '100%';
+  camadaCinza.style.height = '100%';
+  camadaCinza.style.backgroundColor = `rgba(0, 0, 0, ${opacidadeFundo})`; 
+  camadaCinza.style.zIndex = '9999';
+  camadaCinza.style.display = 'flex';
+  camadaCinza.style.alignItems = 'center';
+  camadaCinza.style.justifyContent = 'center';
 
+  const mensagemCarregando = document.createElement('p');
+  mensagemCarregando.textContent = mensagem;
+  mensagemCarregando.style.color = corMensagem;
+
+  camadaCinza.appendChild(mensagemCarregando);
+
+  document.body.appendChild(camadaCinza);
+};
+
+// Função para remover a camada cinza
+const removerCamadaCinza = () => {
+  const camadaCinza = document.querySelector('.camada-cinza');
+  if (camadaCinza) {
+      document.body.removeChild(camadaCinza);
+  }
+};
 
 const fetchData = async () => {
+  exibirCamadaCinza('Buscando posts...','white','0.5'); 
     try {
 
       const cachedResponse = await fetch(apiUrl);
       let data = cachedResponse ? await cachedResponse.json() : null;
       
-  
-
       if (data.posts.length !== 0) {
         for (const post of data.posts) {
           let titulo = post.titulo;
@@ -97,7 +125,7 @@ const fetchData = async () => {
             
             try {
                 let titulocardEncoded = encodeURIComponent(titulocard);
-                let url = `/posts/update/${titulocardEncoded}`;
+                let url = `/posts/${titulocardEncoded}`;
         
                 window.location.href = url;
             
@@ -110,10 +138,20 @@ const fetchData = async () => {
       
     }
 } else {
-    console.log('Não ha posts disponíveis');
+  setTimeout(() => {
+    exibirCamadaCinza('Não há posts disponiveís','white','0.95');
+  }, 5500);
 }
+
 } catch (error) {
-console.error(error);
+  exibirCamadaCinza('Erro interno no servidor','red','0.95');
+       
+  setTimeout(() => {
+    window.location.href = '/';
+  }, 3000);
+}
+finally{
+  removerCamadaCinza(); 
 }
 };
 

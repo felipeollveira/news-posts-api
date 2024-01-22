@@ -1,8 +1,8 @@
 const urlApi = 'https://db-pubs.vercel.app';
 /*
-const fetchAndCacheData = async () => {
-  const cacheName = `data-cache-${Date.now()}`;
+const cacheName = `data-cache-${Date.now()}`;
 
+const fetchAndCacheData = async () => {
   try {
     // Limpar a cache existente
     await limparCache();
@@ -42,31 +42,29 @@ const limparCache = async () => {
       }
     }));
   } catch (error) {
-    console.error('Erro ao excluir o cache:', error);
+    console.error('Erro ao excluir o cache:', error.message);
+    throw error;
   }
 };
-
 
 // Chama a função para buscar e armazenar dados
 fetchAndCacheData();
 
-
 const visualizarCache = async () => {
   try {
-    const cache = await caches.open(`data-cache-${Date.now()}`);
+    const cache = await caches.open(cacheName);
     const keys = await cache.keys();
 
-    console.log('Chaves na cache:');
-    keys.forEach((key) => console.log(key.url));
-
-    console.log('\nPosts na cache:');
     for (const key of keys) {
       const response = await cache.match(key);
-      const data = await response.json();
-      console.log(data);
+      if (response) {
+        const data = await response.json();
+        console.log('Conteúdo da Cache:', data);
+      }
     }
   } catch (error) {
-    console.error('Erro ao visualizar a cache:', error);
+    console.error('Erro ao visualizar a cache:', error.message);
+    throw error;
   }
 };
 

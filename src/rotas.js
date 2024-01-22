@@ -35,7 +35,7 @@ root.post('/', post_go_db);
 
 root.get('/posts/', postPage)
 
-root.get('/posts/update/:title/', (req, res) => {
+root.get('/posts/:title/', (req, res) => {
     const title = req.params.title;
     res.render('pages/edit', { title });
 });
@@ -43,7 +43,7 @@ root.get('/posts/update/:title/', (req, res) => {
 //root.use(run)
 
 root.post('/posts/', deleteCard)
-root.post('/posts/update/:title', editPost)
+root.post('/posts/:title', editPost)
 
 
 
