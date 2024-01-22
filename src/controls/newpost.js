@@ -17,18 +17,6 @@ const post_go_db = async (req, res, next) => {
 
         const pubCollection = client.db('posts').collection('pubs');
 
-        /*
-        console.log('Dados a serem inseridos:', {
-            titulo,
-            introducao,
-            desenvolvimento: assunto,
-            conclusao,
-            data: timestamp,
-            autor,
-            images,
-        });
-        */
-        // Operação de inserção diretamente na coleção
         const result = await pubCollection.insertOne({
             titulo,
             introducao,

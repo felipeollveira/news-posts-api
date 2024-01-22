@@ -26,13 +26,14 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: {
-        type: Buffer,
-    },
-    
+    images: [
+        {
+            data: Buffer,
+            contentType: String,
+        },
+    ],
 });
 
 const Post = mongoose.model('Post', postSchema, 'posts', { versionKey: false });  
-
 
 module.exports = Post;

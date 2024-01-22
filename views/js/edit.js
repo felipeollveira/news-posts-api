@@ -1,3 +1,5 @@
+
+
 const tituloInput = document.querySelector('input[name="titulo"]');
 const introducaoTextarea = document.querySelector('textarea[name="introducao"]');
 const assuntoTextarea = document.querySelector('textarea[name="assunto"]');
@@ -14,27 +16,66 @@ const obterTituloDaURL = () => {
     return '';
 };
 
+// Função para exibir a camada cinza
+const exibirCamadaCinza = (mensagem, cor, opacity) => {
+  const camadaCinza = document.createElement('div');
+  camadaCinza.className = 'camada-cinza';
+  camadaCinza.style.position = 'fixed';
+  camadaCinza.style.top = '0';
+  camadaCinza.style.left = '0';
+  camadaCinza.style.width = '100%';
+  camadaCinza.style.height = '100%';
+  camadaCinza.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`; 
+  camadaCinza.style.zIndex = '9999';
+  camadaCinza.style.display = 'flex';
+  camadaCinza.style.alignItems = 'center';
+  camadaCinza.style.justifyContent = 'center';
+
+  const mensagemCarregando = document.createElement('p');
+  mensagemCarregando.textContent = mensagem;
+  mensagemCarregando.style.color = cor;
+
+  camadaCinza.appendChild(mensagemCarregando);
+
+  document.body.appendChild(camadaCinza);
+};
+
+// Função para remover a camada cinza
+const removerCamadaCinza = () => {
+  const camadaCinza = document.querySelector('.camada-cinza');
+  if (camadaCinza) {
+      document.body.removeChild(camadaCinza);
+  }
+};
+
 const buscarPostNaAPI = async (tituloDoPost) => {
-    const apiUrl = 'https://db-pubs.vercel.app';
-  
-    try {
-      
+  exibirCamadaCinza('Buscando post...','white','0.5'); 
+
+  const apiUrl = 'https://db-pubs.vercel.app';
+
+  try {
       const cachedResponse = await fetch(apiUrl);
       let data = cachedResponse ? await cachedResponse.json() : null;
 
       const post = data.posts.find(post => post.titulo === tituloDoPost);
-  
+
       if (post) {
-        preencherCamposDoFormulario(post);
-      } else {
-        console.log('Post não encontrado.');
+          preencherCamposDoFormulario(post);
+      } else {            
+        exibirCamadaCinza('Erro inesperado ao buscar post','red','0.95');
+       
+        setTimeout(() => {
+          window.location.href = '/posts';
+        }, 1000);
       }
-    } catch (error) {
+  } catch (error) {
       exibirErro('Erro ao buscar o post na API.');
       console.error(error);
-    }
-  };
-  
+  } finally {
+      removerCamadaCinza(); 
+  }
+};
+
 
 const preencherCamposDoFormulario = (post) => {
     tituloInput.value = post.titulo;
