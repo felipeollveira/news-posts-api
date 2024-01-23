@@ -4,6 +4,7 @@ const tituloInput = document.querySelector('input[name="titulo"]');
 const introducaoTextarea = document.querySelector('textarea[name="introducao"]');
 const assuntoTextarea = document.querySelector('textarea[name="assunto"]');
 const conclusaoTextarea = document.querySelector('textarea[name="conclusao"]');
+const imagemTextarea = document.querySelector('textarea[name="imagem"]')
 
 const obterTituloDaURL = () => {
     const urlSegments = window.location.pathname.split('/');
@@ -54,8 +55,15 @@ const buscarPostNaAPI = async (tituloDoPost) => {
   const apiUrl = 'https://db-pubs.vercel.app';
 
   try {
-      const cachedResponse = await fetch(apiUrl);
-      let data = cachedResponse ? await cachedResponse.json() : null;
+    const cachedResponse = localStorage.getItem('apiData');
+    let data = cachedResponse ? JSON.parse(cachedResponse) : null;
+
+    if (!data) {
+      // Se os dados não estiverem na cache, buscar da API e armazenar
+      const response = await fetch(apiUrl);
+      data = await response.json();
+      localStorage.setItem('apiData', JSON.stringify(data));
+    }
 
       const post = data.posts.find(post => post.titulo === tituloDoPost);
 
@@ -82,6 +90,9 @@ const preencherCamposDoFormulario = (post) => {
     introducaoTextarea.value = post.introducao;
     assuntoTextarea.value = post.desenvolvimento;
     conclusaoTextarea.value = post.conclusao;
+
+    post.imagem === undefined ? imagemTextarea.value = '' : imagemTextarea.value = post.imagem
+
 };
 
 const exibirErro = (mensagem) => {

@@ -8,19 +8,21 @@ const deleteCard = async (req, res, next) => {
   const { titulo } = req.body;
 
   try {
-    const resultado = await Post.deleteOne({ titulo: titulo });
+    const documento = await Post.findOne({ titulo: titulo });
 
-    if (resultado.deletedCount > 0) {
-      await attVersion()
-      return res.status(200).json({ message: 'Documento excluído com sucesso.' });
-    } else {
+    if (!documento) {
       return res.status(404).json({ message: 'Nenhum documento encontrado para exclusão.' });
     }
+    const resultado = await documento.delete();
+    await attVersion();
+
+    return res.status(200).json({ message: 'Documento excluído com sucesso.' });
   } catch (error) {
     console.error('Erro no servidor ao excluir documento:', error);
     return res.status(500).json({ message: 'Erro no servidor ao excluir documento.' });
   }
 };
+
 
 // Função para editar um post
 const editPost = async (req, res) => {

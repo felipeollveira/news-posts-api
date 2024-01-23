@@ -8,7 +8,7 @@ const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
 const post_go_db = async (req, res, next) => {
-    const { titulo, introducao, assunto, conclusao, images } = req.body;
+    const { titulo, introducao, assunto, conclusao, imagem } = req.body;
     const timestamp = new Date().toISOString();
     const autor = process.env.AUTOR || 'felipeoliveira';
 
@@ -24,10 +24,9 @@ const post_go_db = async (req, res, next) => {
             conclusao,
             data: timestamp,
             autor,
-            images,
+            imagem,
         });
 
-        //console.log('Novo post criado com imagens:', images);
         await attVersion()
         res.status(204).send({ message: 'Publicado!' });
         next();
