@@ -36,9 +36,17 @@ const fetchData = async () => {
   exibirCamadaCinza('Buscando posts...','white','0.5'); 
     try {
 
-      const cachedResponse = await fetch(apiUrl);
-      let data = cachedResponse ? await cachedResponse.json() : null;
-      
+      const apiUrl = 'https://db-pubs.vercel.app';
+        const cachedResponse = localStorage.getItem('apiData');
+        let data = cachedResponse ? JSON.parse(cachedResponse) : null;
+    
+        if (!data) {
+          // Se os dados não estiverem na cache, buscar da API e armazenar
+          const response = await fetch(apiUrl);
+          data = await response.json();
+          localStorage.setItem('apiData', JSON.stringify(data));
+        }
+        
       if (data.posts.length !== 0) {
         for (const post of data.posts) {
           let titulo = post.titulo;
