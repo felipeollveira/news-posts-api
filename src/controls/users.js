@@ -74,7 +74,8 @@ const homePage = (req, res) => {
 };
 
 const postPage = (req, res) => {
-  res.render('pages/posts');
+  const key = process.env.CHAVE_SECRETA
+  res.render('pages/posts', {key});
 };
 
 module.exports = {

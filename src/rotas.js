@@ -13,7 +13,7 @@ root.set('views', path.join(__dirname, '..', 'views'));
 const { deleteCard, editPost } = require('./controls/modify');
 const { loginPage, autLogin, homePage, postPage, isAuthenticated } = require('./controls/users');
 const { post_go_db} = require('./controls/newpost');
-const { run } = require('./sql/connect');
+
 
 
 

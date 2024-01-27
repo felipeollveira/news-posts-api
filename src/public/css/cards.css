@@ -23,6 +23,14 @@ body{
     background: var(--background);
 }
 
+.att{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.att span{
+    color: white;
+}
 .titulos{
     display: grid;
     align-items: center;
