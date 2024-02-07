@@ -49,8 +49,16 @@ button {
 
 
 
-a {
+.paginaAnterior {
+  background: var(--background);
+  position: fixed;
+  top: 0;
+  padding-bottom: 6px;
+}
+
+a{
   text-decoration: none;
+  width: 100%;
 }
 
 img {

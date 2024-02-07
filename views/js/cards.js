@@ -39,6 +39,8 @@ const fetchData = async () => {
       const apiUrl = 'https://db-pubs.vercel.app';
         const cachedResponse = localStorage.getItem('apiData');
         let data = cachedResponse ? JSON.parse(cachedResponse) : null;
+
+       
     
         if (!data) {
           // Se os dados não estiverem na cache, buscar da API e armazenar
@@ -51,7 +53,9 @@ const fetchData = async () => {
         for (const post of data.posts) {
           let titulo = post.titulo;
           let datapost = post.data;
+          let idpost = post._id
 
+      
 
           const cards = document.createElement("div")
           cards.setAttribute('class', 'cards')
@@ -59,6 +63,7 @@ const fetchData = async () => {
           let tituloElement = document.createElement("h5");
           tituloElement.setAttribute('class', 'cardtitle')
           tituloElement.textContent = titulo;
+          tituloElement.setAttribute('data-id', idpost)
 
           let dataElement = document.createElement("h6");
           let dataDezChar = datapost.substring(0,10);
@@ -90,18 +95,18 @@ const fetchData = async () => {
           root.appendChild(cards)
 
 
-
           const confirmarExclusao = () => {
-            const titulo = tituloElement.textContent;
+            const titulo = tituloElement.innerHTML;
+            let id = tituloElement.dataset.id
             const confirmacao = prompt('Digite a primeira letra do titulo para excluir');
-            return { titulo, confirmacao };
+            return { titulo, confirmacao, id };
           };
           
-          const handleExclusao = ({ titulo, confirmacao }) => {
+          const handleExclusao = ({ titulo, confirmacao, id }) => {
             if (confirmacao === titulo[0]) {
               fetch('/posts/', {
                 method: 'POST',
-                body: JSON.stringify({ titulo }),
+                body: JSON.stringify({ id }),
                 headers: {
                   'Content-Type': 'application/json',
                 },

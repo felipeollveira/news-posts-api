@@ -4,7 +4,8 @@ const tituloInput = document.querySelector('input[name="titulo"]');
 const introducaoTextarea = document.querySelector('textarea[name="introducao"]');
 const assuntoTextarea = document.querySelector('textarea[name="assunto"]');
 const conclusaoTextarea = document.querySelector('textarea[name="conclusao"]');
-const imagemTextarea = document.querySelector('textarea[name="imagem"]')
+
+const visualizarImagem = document.getElementById('imagemAtual')
 
 const obterTituloDaURL = () => {
     const urlSegments = window.location.pathname.split('/');
@@ -90,8 +91,9 @@ const preencherCamposDoFormulario = (post) => {
     introducaoTextarea.value = post.introducao;
     assuntoTextarea.value = post.desenvolvimento;
     conclusaoTextarea.value = post.conclusao;
+    visualizarImagem.src = post.imagem
 
-    post.imagem === undefined ? imagemTextarea.value = '' : imagemTextarea.value = post.imagem
+    post.imagem === undefined ? visualizarImagem.alt = 'Não há imagem nessa publicação.' : visualizarImagem.alt = 'Não há imagem nessa publicação.'
 
 };
 

@@ -27,8 +27,29 @@
         
         <section>
             <h5>Imagem</h5>
-            <textarea style="width: 100%; height: 50px;" name="imagem"></textarea>
+            <section onclick="abrirModal()">
+                <img src="" id="imagemAtual" alt="imagemUsadaNoBlog" class="imagemAtual" name="imagem">
 
+            </section> 
+         
+            
+            <section class="popNovaImagem" id="popImagem">
+                <section class="conteudoModal">
+                 <h1 id="feed">Upload de uma nova imagem</h1>    
+                <textarea style="width: 100%" name="imagem" placeholder="Cole a url aqui"></textarea>
+
+                <img src="" alt="nova Imagem" id="novaImagem" style="display: none; margin-bottom: 6px;" >
+
+
+                <span>
+                       <p onclick="verificarImagem()" id="verificarImagem">Verificar imagem</p>
+                        <p onclick="fecharModal()" id="fecharModal"></p>
+                        <p onclick="salvar()" id="salvar" style="display: none;"></p>
+                        <p onclick="escolherOutra()" id="escolherOutra" style="display: none;"></p>
+                </span>
+             
+            </section>
+        </section>
 
         </section>
       
@@ -77,5 +98,71 @@
 
 
 <script type="text/javascript" src="/static/js/edit.js"></script>
+<script>
+    const modal = document.getElementById('popImagem')
+    const imagemTextarea = document.querySelector('textarea[name="imagem"]')
+    const novaImagem = document.getElementById('novaImagem')
+    const btnVerificar = document.getElementById('verificarImagem')
+    const feedback = document.getElementById('feed')
+
+    const imagemAtual = document.getElementById('imagemAtual')
+    const fechaModal = document.getElementById('fecharModal')
+    const salvarImg = document.getElementById('salvar')
+    const escolherOutraImg = document.getElementById('escolherOutra')
+
+    function abrirModal(){
+        modal.style.display = 'grid'
+    }
+    
+    function fecharModal(){
+        modal.style.display = 'none'
+    }
+
+    function verificarImagem(){
+            if (imagemTextarea.value.length != 0) {
+                novaImagem.src = imagemTextarea.value
+    
+                novaImagem.style.display = 'block'
+                imagemTextarea.style.display ='none'
+                feedback.textContent = 'Para confirmar...'
+                btnVerificar.style.display = 'none'
+    
+                fechaModal.style.display='none'
+                salvarImg.style.display = 'block'
+                escolherOutraImg.style.display='block'
+
+                return imagemTextarea.value
+            }
+            alert('Nenhuma url válida encontrada.')
+        }
+    
+    function escolherOutra() {
+    novaImagem.style.display = 'none'
+    imagemTextarea.style.display = 'block';
+    imagemTextarea.value = ''; 
+
+    feedback.textContent = 'Upload de uma nova imagem';
+    
+    btnVerificar.style.display = 'block';
+
+    fechaModal.style.display = 'block';
+
+    salvarImg.style.display = 'none';
+    escolherOutraImg.style.display = 'none';
+    novaImagem.src = '';
+}
+
+
+    function salvar(){
+        imagemAtual.src = verificarImagem()
+        modal.style.display = 'none'
+        escolherOutra()
+
+    }
+
+
+
+
+</script>
 </body>
 </html>

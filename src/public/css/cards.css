@@ -4,6 +4,7 @@
     gap: 12px; 
     overflow: auto;
     
+
 }
 
 .cards{
@@ -17,6 +18,10 @@
     background-color: var(--background-fl);
     padding: 10px;
    
+}
+
+main{
+    padding-top: 32px;
 }
 
 body{

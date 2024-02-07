@@ -47,7 +47,8 @@
   .formatos section {
     display: flex;
     flex-direction: column;
-    max-height: auto;
+    max-height: 200px;
+    min-height: 150px;
     margin-bottom: 20px;
     color: white;
     background-color: var(--background-fl);

@@ -28,7 +28,8 @@ const post_go_db = async (req, res, next) => {
         });
 
         await attVersion()
-        res.status(204).send({ message: 'Publicado!' });
+        res.status(200).json({ success: true, message: 'Publicado com sucesso!' });
+
         next();
     } catch (error) {
         console.error('Erro na criação do post:', error);
