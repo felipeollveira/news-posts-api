@@ -23,7 +23,7 @@ main {
   .createpost form {
     background-color: var(--background-fl);
     border: 1px solid var(--cor-borda);
-    height: 100%;
+    height: max-content;
     color: whitesmoke;
     padding: 20px;
     border-radius: 8px;
@@ -32,6 +32,9 @@ main {
 
   .imagemCss{
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .imagemCss img{
@@ -87,7 +90,7 @@ main {
 
  /* Estilos para o modal */
 .popNovaImagem {
-  display: grid;
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -119,8 +122,17 @@ main {
   gap: 6px;
 }
 
+
 .popNovaImagem span{
  width: max-content;
+}
+.imagemAtual{
+ background-size: contain;
+
+}
+
+img{
+  image-rendering: auto;
 }
 
 .popNovaImagem span section{
@@ -255,6 +267,13 @@ main {
     align-content: space-around;
     justify-content: space-evenly;
      }
-   
+     .imagemHover {
+      display: grid;
+     }
+     .popNovaImagem img{
+      max-width: 60%;
+      justify-content: center;
+    }
+    
 
   }

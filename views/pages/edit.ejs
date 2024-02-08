@@ -27,9 +27,12 @@
         
         <section>
             <h5>Imagem</h5>
+
+            <textarea style="display: none;" id="srcImagemInput" name="imagem"></textarea>
+
             <section  class="imagemCss">
-                <span onclick="abrirModal()" class="imagemHover">Substituir imagem</span>
-                <img src="" alt="Imagem da publicação" id="imagemAtual" class="imagemAtual" name="imagem">
+                <span onclick="abrirModal()" class="imagemHover" id="btnSubstituir">Substituir imagem</span>
+                <img src="" alt="Imagem da publicação" id="imagemAtual" class="imagemAtual" name="srcimagem">
             </section> 
             <span onclick="abrirModal()" id="btnUpload" style="display: none;" class="btnUpload">Upload de imagem</span>
             
@@ -59,7 +62,6 @@
         </section>
 
         </section>
-      
         <section>
             <h5>Conclusão</h5>
             <textarea style="width: 100%; height: 50px;" name="conclusao"  placeholder="Edite a conclusão aqui"></textarea>
@@ -114,16 +116,19 @@
     const feedback = document.getElementById('feed')
     const feedbackSpan = document.getElementById('feedback')
 
+    const srcImagemInput = document.getElementById('srcImagemInput');
+
     const imagemAtual = document.getElementById('imagemAtual')
     const fechaModal = document.getElementById('fecharModal')
     const salvarImg = document.getElementById('salvar')
     const escolherOutraImg = document.getElementById('escolherOutra')
     const btnUpload = document.getElementById('btnUpload')
+    const btnSubstituir = document.getElementById('btnSubstituir')
 
-    
-
-    function abrirModal(){
+   
+    async function abrirModal(){
         modal.style.display = 'grid'
+        verificarImagem()
     }
     
     function fecharModal(){
@@ -184,14 +189,20 @@
 
     async function salvar(){
         imagemAtual.src = await verificarImagem()
-        
+        btnSubstituir.style.opacity = '1'
         visualizarImagem.style.display ='block'
-        btnUpload.style.display ='none'
+        btnUpload.style.display = 'none'
+
+        srcImagemInput.textContent = await verificarImagem()
+
         fecharModal()
     }
 
     function removerImagem(){
-        btnUpload.style.display ='block'
+        btnUpload.style.display = 'block'
+        btnSubstituir.style.opacity = '0'
+        btnSubstituir.style.display = 'block'
+  
         visualizarImagem.style.display ='none'
         imagemAtual.src = ''
         novaImagem.src = ''

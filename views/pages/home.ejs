@@ -27,8 +27,39 @@
         
         <section>
             <h5>Imagem</h5>
-            <textarea style="width: 100%; height: 50px;" name="imagem"></textarea>
 
+            <textarea style="display: none;" id="srcImagemInput" name="imagem"></textarea>
+
+            <section  class="imagemCss" id="displayImagem">
+                <span onclick="abrirModal()" class="imagemHover" id="btnSubstituir">Substituir imagem</span>
+                <img src="" id="imagemAtual" class="imagemAtual" name="srcimagem">
+            </section> 
+            <span onclick="abrirModal()" id="btnUpload" style="display: none;" class="btnUpload">Upload de imagem</span>
+            
+            <section class="popNovaImagem" id="popImagem">
+                <section class="conteudoModal">
+                 <h1 id="feed">Upload de uma nova imagem</h1> 
+
+                 <span id="feedback" class="feedback"></span>  
+                <textarea style="width: 100%" name="image" placeholder="Cole a url aqui" tabindex="0"></textarea>
+
+                <img src="" alt="nova Imagem" id="novaImagem" style="display: none; margin-bottom: 6px;" >
+
+
+                <span>
+                       <p onclick="verificarImagem()" id="verificarImagem" tabindex="0" onkeydown="handleKeyDown(event)">Verificar imagem √</p>
+                        <p onclick="fecharModal()" id="fecharModal" tabindex="0" onkeydown="handleKeyDown(event)"></p>
+                        <section>
+               
+                          <p onclick="salvar()" id="salvar" style="display: none;" tabindex="0" onkeydown="handleKeyDown(event)"></p>
+                        <p onclick="removerImagem()" style="display: none" id="removerImagem" tabindex="0" onkeydown="handleKeyDown(event)"></p>
+                      
+                        <p onclick="escolherOutra()" id="escolherOutra" style="display: none;" tabindex="0" onkeydown="handleKeyDown(event)"></p>
+                     </section>
+                </span>
+             
+            </section>
+        </section>
 
         </section>
         
@@ -75,6 +106,117 @@
     <%- include('../partials/footer'); %>
 </footer>
 
+<script>
+     const modal = document.getElementById('popImagem')
+    const imagemTextarea = document.querySelector('textarea[name="image"]')
+    const novaImagem = document.getElementById('novaImagem')
+    const btnVerificar = document.getElementById('verificarImagem')
+    const btnRemoverImg = document.getElementById('removerImagem')
+    const feedback = document.getElementById('feed')
+    const feedbackSpan = document.getElementById('feedback')
+    const visualizarImagem = document.getElementById('imagemAtual')
+    const btnSubstituir = document.getElementById('btnSubstituir')
+
+    const srcImagemInput = document.getElementById('srcImagemInput');
+
+    const imagemAtual = document.getElementById('imagemAtual')
+    const fechaModal = document.getElementById('fecharModal')
+    const salvarImg = document.getElementById('salvar')
+    const escolherOutraImg = document.getElementById('escolherOutra')
+    const btnUpload = document.getElementById('btnUpload')
+    const displayCasoSemImg = document.getElementById('displayImagem')
+
+    displayCasoSemImg.style.display = 'none'
+    btnUpload.style.display = 'grid' 
+    
+
+    function abrirModal(){
+        modal.style.display = 'grid'
+    }
+    
+    function fecharModal(){
+        modal.style.display = 'none'
+    }
+
+    async function verificarImagem() {
+        const urlImagem = imagemTextarea.value.trim();
+        const img = new Image();
+
+        img.onerror = function() {
+            setTimeout(() => {
+                feedbackSpan.textContent = '';
+            }, 3000);
+            
+            imagemTextarea.value = ''
+            feedbackSpan.textContent = 'A URL fornecida não é uma imagem válida.';
+         
+        };
+
+        
+        img.src = urlImagem;
+
+      
+        img.onload = function() {
+            btnRemoverImg.style.display = 'block'
+            novaImagem.src = urlImagem;
+            novaImagem.style.display = 'block';
+            imagemTextarea.style.display = 'none';
+            feedback.textContent = 'Para confirmar...';
+            btnVerificar.style.display = 'none';
+            fechaModal.style.display = 'none';
+            salvarImg.style.display = 'block';
+            escolherOutraImg.style.display = 'block';
+
+        } 
+        return urlImagem;
+
+    }
+
+
+    function escolherOutra() {
+        novaImagem.style.display = 'none'
+        imagemTextarea.style.display = 'block';
+        btnRemoverImg.style.display = 'none'
+        feedback.textContent = 'Upload de uma nova imagem';
+        
+        btnVerificar.style.display = 'block';
+
+        fechaModal.style.display = 'block';
+
+        salvarImg.style.display = 'none';
+        escolherOutraImg.style.display = 'none';
+        novaImagem.src = '';
+    }
+
+
+    async function salvar(){
+        displayCasoSemImg.style.display = 'grid'
+        imagemAtual.src = await verificarImagem()
+        btnSubstituir.style.opacity = '1'
+        visualizarImagem.style.display ='block'
+        btnUpload.style.display ='none'
+
+        srcImagemInput.textContent = await verificarImagem()
+
+        fecharModal()
+    }
+
+    function removerImagem(){
+        imagemTextarea.value = ''
+        btnUpload.style.display ='block'
+        btnSubstituir.style.opacity = '0'
+        btnSubstituir.style.display = 'block'
+        btnUpload.style.display ='grid'
+        visualizarImagem.style.display ='none'
+        imagemAtual.src = ''
+        novaImagem.src = ''
+       escolherOutra()
+    }
+
+
+
+
+</script>
 
 
 </body>

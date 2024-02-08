@@ -98,7 +98,7 @@ const preencherCamposDoFormulario = (post) => {
      visualizarImagem.style.display ='none'
      btnUpload.style.display ='block'
  
-  }else{
+  }else{ 
     imagemTextareaSecond.value = imagemAtual.src
   }
 
