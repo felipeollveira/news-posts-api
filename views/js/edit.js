@@ -93,7 +93,12 @@ const preencherCamposDoFormulario = (post) => {
     conclusaoTextarea.value = post.conclusao;
     visualizarImagem.src = post.imagem
 
-    post.imagem === undefined ? visualizarImagem.alt = 'Não há imagem nessa publicação.' : visualizarImagem.alt = 'Não há imagem nessa publicação.'
+    if(post.imagem === '')  {
+     visualizarImagem.style.display ='none'
+     btnUpload.style.display ='block'
+  }
+  
+    
 
 };
 

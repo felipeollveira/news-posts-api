@@ -33,14 +33,15 @@ const MENSAGEM_EXCLUSAO_ERRO = 'Erro no servidor ao excluir documento.';
 // Função para editar um post
 const editPost = async (req, res) => {
   const tituloSearch = req.params.title;
-  const { id, titulo, introducao, assunto, conclusao } = req.body;
+  const { titulo, introducao, assunto, conclusao, imagem } = req.body;
 
   try {
     const updateValues = {
       titulo: titulo || undefined,
       introducao: introducao || undefined,
       desenvolvimento: assunto || undefined,
-      conclusao: conclusao || undefined
+      conclusao: conclusao || undefined,
+      imagem: imagem || undefined
     };
 
     const hasUpdateValues = Object.values(updateValues).some(value => value !== undefined);

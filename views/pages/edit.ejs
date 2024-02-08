@@ -29,15 +29,15 @@
             <h5>Imagem</h5>
             <section  class="imagemCss">
                 <span onclick="abrirModal()" class="imagemHover">Substituir imagem</span>
-                <img src="" id="imagemAtual" alt="imagemUsadaNoBlog" class="imagemAtual" name="imagem">
-
+                <img src="" alt="Imagem da publicação" id="imagemAtual" class="imagemAtual" name="imagem">
             </section> 
-         
+            <span onclick="abrirModal()" id="btnUpload" style="display: none;" class="btnUpload">Upload de imagem</span>
             
             <section class="popNovaImagem" id="popImagem">
                 <section class="conteudoModal">
-                 <h1 id="feed">Upload de uma nova imagem</h1>    
-                <textarea style="width: 100%" name="imagem" placeholder="Cole a url aqui"></textarea>
+                 <h1 id="feed">Upload de uma nova imagem</h1>  
+                 <span id="feedback"></span>  
+                <textarea style="width: 100%" name="image" placeholder="Cole a url aqui"></textarea>
 
                 <img src="" alt="nova Imagem" id="novaImagem" style="display: none; margin-bottom: 6px;" >
 
@@ -101,15 +101,19 @@
 <script type="text/javascript" src="/static/js/edit.js"></script>
 <script>
     const modal = document.getElementById('popImagem')
-    const imagemTextarea = document.querySelector('textarea[name="imagem"]')
+    const imagemTextarea = document.querySelector('textarea[name="image"]')
     const novaImagem = document.getElementById('novaImagem')
     const btnVerificar = document.getElementById('verificarImagem')
     const feedback = document.getElementById('feed')
+    const feedbackSpan = document.getElementById('feedback')
 
     const imagemAtual = document.getElementById('imagemAtual')
     const fechaModal = document.getElementById('fecharModal')
     const salvarImg = document.getElementById('salvar')
     const escolherOutraImg = document.getElementById('escolherOutra')
+    const btnUpload = document.getElementById('btnUpload')
+
+    
 
     function abrirModal(){
         modal.style.display = 'grid'
@@ -119,23 +123,43 @@
         modal.style.display = 'none'
     }
 
-    function verificarImagem(){
-            if (imagemTextarea.value.length != 0) {
-                novaImagem.src = imagemTextarea.value
-    
-                novaImagem.style.display = 'block'
-                imagemTextarea.style.display ='none'
-                feedback.textContent = 'Para confirmar...'
-                btnVerificar.style.display = 'none'
-    
-                fechaModal.style.display='none'
-                salvarImg.style.display = 'block'
-                escolherOutraImg.style.display='block'
+    function verificarImagem() {
+    const urlImagem = imagemTextarea.value.trim();
 
-                return imagemTextarea.value
-            }
-            alert('Nenhuma url válida encontrada.')
-        }
+    // Cria uma nova imagem
+    const img = new Image();
+
+    if (urlImagem.length !== 0 ) {
+
+        img.src = urlImagem;
+        img.onerror = function() {
+            setTimeout(() => {
+                feedbackSpan.textContent = '';
+                
+            }, 3000);
+
+            feedbackSpan.textContent = 'A URL fornecida não é uma imagem válida.';
+             escolherOutra()
+        };
+           
+        novaImagem.src = urlImagem;
+        novaImagem.style.display = 'block';
+        imagemTextarea.style.display = 'none';
+        feedback.textContent = 'Para confirmar...';
+        btnVerificar.style.display = 'none';
+        fechaModal.style.display = 'none';
+        salvarImg.style.display = 'block';
+        escolherOutraImg.style.display = 'block';
+
+     
+
+        return urlImagem;
+    } else {
+        alert('Nenhuma URL fornecida ou a URL fornecida não é uma imagem válida.');
+    }
+}
+
+
     
     function escolherOutra() {
     novaImagem.style.display = 'none'
@@ -157,6 +181,10 @@
     function salvar(){
         imagemAtual.src = verificarImagem()
         modal.style.display = 'none'
+        
+        visualizarImagem.style.display ='block'
+    btnUpload.style.display ='none'
+
         escolherOutra()
 
     }
