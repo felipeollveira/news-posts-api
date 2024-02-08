@@ -4,7 +4,7 @@ const tituloInput = document.querySelector('input[name="titulo"]');
 const introducaoTextarea = document.querySelector('textarea[name="introducao"]');
 const assuntoTextarea = document.querySelector('textarea[name="assunto"]');
 const conclusaoTextarea = document.querySelector('textarea[name="conclusao"]');
-
+const imagemTextareaSecond = document.querySelector('textarea[name="image"]')
 const visualizarImagem = document.getElementById('imagemAtual')
 
 const obterTituloDaURL = () => {
@@ -93,10 +93,15 @@ const preencherCamposDoFormulario = (post) => {
     conclusaoTextarea.value = post.conclusao;
     visualizarImagem.src = post.imagem
 
+
     if(post.imagem === '')  {
      visualizarImagem.style.display ='none'
      btnUpload.style.display ='block'
+ 
+  }else{
+    imagemTextareaSecond.value = imagemAtual.src
   }
+
   
     
 
@@ -108,6 +113,29 @@ const exibirErro = (mensagem) => {
    
     alert(mensagem);
 };
+
+//evento de enter
+function handleKeyDown(event) {
+  if (event.key === 'Enter') {
+      // Verifica qual elemento foi acionado e chama a função correspondente
+      switch (event.target.id) {
+          case 'verificarImagem':
+              verificarImagem();
+              break;
+          case 'fecharModal':
+              fecharModal();
+              break;
+          case 'salvar':
+              salvar();
+              break;
+          case 'escolherOutra':
+              escolherOutra();
+              break;
+          default:
+              break;
+      }
+  }
+}
 
 
 
