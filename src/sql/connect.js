@@ -13,7 +13,7 @@ async function run() {
   try {
     await client.connect();
     await client.db("posts").command({ ping: 1 });
-    console.log("Você se conectou com sucesso ao MongoDB!");
+    console.log("Conectado mongodb");
   } catch (error) {
     console.error('Erro ao conectar ao MongoDB:', error.message);
   } 

@@ -1,6 +1,11 @@
 const { attVersion } = require('./version');
 const Post = require('../sql/models/posts');
 
+const { MongoClient, ObjectId  } = require('mongodb');
+require('dotenv').config();
+
+const uri = process.env.MONGODB_URI;
+const client = new MongoClient(uri);
 
 
 // Função para deletar um post via rota HTTP
@@ -8,65 +13,84 @@ const deleteCard = async (req, res, next) => {
   const { id } = req.body;
 
   try {
-    const documento = await Post.findOne({ _id: id },1);
 
-    if (!documento) {
-      return res.status(404).json({ message: 'Nenhum documento encontrado para exclusão.' });
-    }
+      await client.connect();
 
-     await documento.deleteOne();
-    await attVersion();
+      const db = client.db('posts');
+      const pubCollection = db.collection('pubs');
 
-    return res.status(200).json({ message: MENSAGEM_EXCLUSAO_SUCESSO });
+      const documento = await pubCollection.findOneAndDelete({ _id: new ObjectId(id) });
+
+      if (!documento) {
+          return res.status(404).json({ message: 'Nenhum documento encontrado para exclusão.' });
+      }else{
+        await attVersion();
+
+      return res.status(200).json({ message: MENSAGEM_EXCLUSAO_SUCESSO });
+      }
+
+      
   } catch (error) {
-    console.error('Erro no servidor ao excluir documento:', error);
-    return res.status(500).json({ message: MENSAGEM_EXCLUSAO_ERRO });
+      console.error('Erro no servidor ao excluir documento:', error);
+      return res.status(500).json({ message: MENSAGEM_EXCLUSAO_ERRO });
+  } finally {
+      try {
+          await client.close();
+      } catch (error) {
+          console.error('Erro ao fechar a conexão com o banco de dados:', error);
+      }
   }
 };
+
 
 
 const MENSAGEM_EXCLUSAO_SUCESSO = 'Documento excluído com sucesso.';
 const MENSAGEM_EXCLUSAO_ERRO = 'Erro no servidor ao excluir documento.';
 
 
-
-// Função para editar um post
-  const editPost = async (req, res) => {
+const editPost = async (req, res) => {
     const tituloSearch = req.params.title;
     const { titulo, introducao, assunto, conclusao, imagem } = req.body;
-  
-    try {
-     
 
-      const updateValues = {
-        titulo: titulo || undefined,
-        introducao: introducao || undefined,
-        desenvolvimento: assunto || undefined,
-        conclusao: conclusao || undefined,
-        imagem: imagem || undefined
-      };
-  
-      const hasUpdateValues = Object.values(updateValues).some(value => value !== undefined);
-  
-      if (!hasUpdateValues) {
-        return res.status(400).json({ mensagem: 'Nenhum valor foi fornecido para atualização.' });
-      }
-  
-      const result = await Post.findOneAndUpdate({ titulo: tituloSearch }, updateValues, { new: true });
-  
-      if (result) {
-        await attVersion();
-        return res.status(200).json({ mensagem: 'Post atualizado com sucesso.' });
-      } else {
-        console.error('Nenhuma linha foi atualizada.');
-        return res.status(404).json({ mensagem: 'Post não encontrado ou não foi modificado.' });
-      }
+    try {
+        await client.connect();
+
+        const db = client.db('posts');
+        const pubCollection = db.collection('pubs');
+
+        const updateValues = {
+            $set: {
+                titulo: titulo || undefined,
+                introducao: introducao || undefined,
+                desenvolvimento: assunto || undefined,
+                conclusao: conclusao || undefined,
+                imagem: imagem || undefined
+            }
+        };
+
+        const result = await pubCollection.findOneAndUpdate({ titulo: tituloSearch }, updateValues, { returnOriginal: false });
+
+        if (result) {
+            await attVersion();
+            return res.status(200).json({ mensagem: 'Post atualizado com sucesso.' });
+        } else {
+            console.error('Nenhuma linha foi atualizada.');
+            return res.status(404).json({ mensagem: 'Post não encontrado ou não foi modificado.' });
+        }
     } catch (error) {
-      console.error('Erro ao editar o post:', error);
-      return res.status(500).json({ mensagem: 'Erro ao editar o post.' });
+        console.error('Erro ao editar o post:', error);
+        return res.status(500).json({ mensagem: 'Erro ao editar o post.' });
+    } finally {
+        try {
+            await client.close();
+        } catch (error) {
+            console.error('Erro ao fechar a conexão com o banco de dados:', error);
+        }
     }
-  };
-  
+};
+
+
+
 
 
 

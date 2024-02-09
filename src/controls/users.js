@@ -71,6 +71,7 @@ const autLogin = async (req, res) => {
 
 const homePage = (req, res) => {
   res.render('pages/home');
+
 };
 
 const postPage = (req, res) => {

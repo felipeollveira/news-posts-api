@@ -5,8 +5,10 @@ const server = express();
 const cors = require('cors');
 const { join } = require('path');
 
+
 const sessionSecret = process.env.private_key
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const { run } = require('./sql/connect');
 
 
 

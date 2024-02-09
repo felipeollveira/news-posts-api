@@ -94,16 +94,30 @@ const fetchData = async () => {
           cards.appendChild(icons);
           root.appendChild(cards)
 
-
-          const confirmarExclusao = () => {
-            const titulo = tituloElement.innerHTML;
-            let id = tituloElement.dataset.id
-            const confirmacao = prompt('Digite a primeira letra do titulo para excluir');
-            return { titulo, confirmacao, id };
-          };
           
-          const handleExclusao = ({ titulo, confirmacao, id }) => {
-            if (confirmacao === titulo[0]) {
+         
+
+          function previaExclusao(tituloSelecionado, id){
+            return {tituloSelecionado, id}
+          }
+
+          
+          imgDelete.addEventListener("click", function() {
+            popDel.style.display ='grid'
+
+            let id = tituloElement.dataset.id
+            tituloSelecionado.textContent = tituloElement.innerHTML;
+
+  
+            previaExclusao(tituloSelecionado, id);
+          });
+
+
+          function handleExclusao(){
+            const tituloDigitado = document.querySelector('input[name="tituloDigitado"]').value;
+            const { tituloSelecionado, id } = previaExclusao()
+
+            if (tituloDigitado === tituloSelecionado) {
               fetch('/posts/', {
                 method: 'POST',
                 body: JSON.stringify({ id }),
@@ -112,26 +126,28 @@ const fetchData = async () => {
                 },
               })
               .then(response => {
+                 location.reload() 
                 if (response.ok) {
-                  alert('Post excluído com sucesso');
+                    alert('Post excluído com sucesso');   
+                    handleFechaExclusao()
                 } else {
                   console.error('Erro ao enviar a solicitação: ', response.status);
                 }
               })
               .catch(error => {
                 console.error('Erro ao enviar a solicitação: ', error);
-              });
+              })
+              .finally(() => {
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            });
             } else {
               alert('Exclusão cancelada');
             }
           };
           
-          imgDelete.addEventListener("click", function() {
-            const confirmacaoData = confirmarExclusao();
-            handleExclusao(confirmacaoData);
-          });
           
-
 
             imgModify.addEventListener("click", function() {
             let titulocard = tituloElement.textContent;

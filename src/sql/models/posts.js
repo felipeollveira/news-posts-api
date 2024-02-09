@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+mongoose.connect(process.env.MONGODB_URI)
+
 const postSchema = new mongoose.Schema({
     titulo: {
         type: String,
@@ -26,11 +28,9 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: [
-        {
-          type: String,
-        },
-    ],
+    images: [{
+        type: String,
+    }],
 });
 
 postSchema.index({ titulo: 1 }, { unique: true });

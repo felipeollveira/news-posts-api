@@ -28,7 +28,7 @@ const post_go_db = async (req, res, next) => {
         });
 
         await attVersion()
-        res.status(200).json({ success: true, message: 'Publicado com sucesso!' });
+        res.status(200).send({message: "Publicado!"})
 
         next();
     } catch (error) {

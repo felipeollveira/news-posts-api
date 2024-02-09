@@ -38,6 +38,7 @@ root.get('/posts/', postPage)
 root.get('/posts/:title/', (req, res) => {
     const title = req.params.title;
     res.render('pages/edit', { title });
+
 });
 
 //root.use(run)

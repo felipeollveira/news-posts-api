@@ -1,0 +1,83 @@
+.del {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.706); 
+    z-index: 9998; 
+}
+
+.popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    transform: translate(-50%, -50%);
+    background-color: var(--background-fl);
+    border: 1px solid var(--cor-borda);
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.662);
+    z-index: 9999; 
+}
+
+.popup h1 {
+    font-size: 18pt;
+    text-align: left;
+    width: auto;
+    margin-bottom: 10px;
+    color: rgb(205, 205, 205);
+}
+#tituloPubExcluir{
+    color: var(--colorsystem);
+    cursor: context-menu;
+    
+}
+#tituloPubExcluir:hover{
+    color: var(--colorsystem);
+    text-decoration:underline;
+}
+
+.popup h1:before{
+    color: rgb(205, 205, 205);
+    content: "Digite o título para confirmar exclusão: ";
+}
+.popup h6:before{
+    content: "Excluir publicação";
+    color: rgba(230, 230, 230, 0.131);
+    font-size: 12pt;
+}
+
+.popup input {
+    width: 100%;
+    padding: 4px;
+    height: 50px;
+    color: white;
+    resize: none;
+    margin-bottom: 10px;
+    background-color: transparent;
+    border:1px solid var(--cor-borda);
+}
+
+.popup p:first-child {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.popup p:last-child {
+    padding: 10px 20px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popup p:first-child:hover {
+    background-color: #0056b3;
+}

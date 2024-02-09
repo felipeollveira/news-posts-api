@@ -4,6 +4,7 @@
     <%- include('../partials/head'); %>
     <link rel="stylesheet" type="text/css" href="/css/styles.css" >
     <link rel="stylesheet" type="text/css" href="/css/cards.css" >
+    <link rel="stylesheet" type="text/css" href="/css/popup.css" >
 
 
 </head>
@@ -13,15 +14,37 @@
     <div id="root">
 
     </div>
-    <div class="att">
-     
-        
-    </div>
+    <span class="del" id="popDeletar">
+        <div class="popup">
+            <h6></h6>
+            <h1 ><strong id="tituloPubExcluir">Primeira pub</strong></h1>
+            <input type="text" name="tituloDigitado" placeholder=""></input>
+            <section style="display: flex; align-items: center; justify-items: center; gap: 6px;">
+            <p onclick="handleExclusao()">Excluir</p>
+            <p onclick="handleFechaExclusao()">Agora não</p>
+            </section>
+            
+        </div>
+    </span>
+    
 </main>
 
 <footer>
     <%- include('../partials/footer'); %>
 </footer>
+<script>
+    const popDel = document.getElementById('popDeletar')
+    const tituloSelecionado = document.getElementById('tituloPubExcluir')
+
+   
+
+
+    
+    function handleFechaExclusao(){
+        popDel.style.display ='none'
+    }
+
+</script>
 
 
 <script type="text/javascript" src="/static/js/atualiz.js"></script>
