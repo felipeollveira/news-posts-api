@@ -128,7 +128,7 @@
    
     async function abrirModal(){
         modal.style.display = 'grid'
-        verificarImagem()
+ 
     }
     
     function fecharModal(){
@@ -173,7 +173,6 @@
     function escolherOutra() {
         novaImagem.style.display = 'none'
         imagemTextarea.style.display = 'block';
-        imagemTextarea.value = ''; 
         btnRemoverImg.style.display = 'none'
         feedback.textContent = 'Upload de uma nova imagem';
         
@@ -199,14 +198,17 @@
     }
 
     function removerImagem(){
-        btnUpload.style.display = 'block'
-        btnSubstituir.style.opacity = '0'
-        btnSubstituir.style.display = 'block'
+
+                btnUpload.style.display = 'block'
+                btnSubstituir.style.opacity = '0'
+                btnSubstituir.style.display = 'block'
+
+        
+                visualizarImagem.style.display ='none'
   
-        visualizarImagem.style.display ='none'
-        imagemAtual.src = ''
-        novaImagem.src = ''
-       escolherOutra()
+                novaImagem.src = ''
+            escolherOutra()
+       
     }
 
 

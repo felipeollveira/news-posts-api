@@ -33,8 +33,8 @@ const postSchema = new mongoose.Schema({
     ],
 });
 
+postSchema.index({ titulo: 1 }, { unique: true });
+
 const Post = mongoose.model('Post', postSchema, 'posts', { versionKey: false });  
-
-
 
 module.exports = Post;
