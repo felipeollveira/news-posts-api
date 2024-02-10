@@ -33,6 +33,12 @@ main {
     margin-bottom: 6px;
   }
 
+  .createpost section:first-child h5::after{
+    content: " *";
+    color: var(--colorsystem);
+    font-size: 12pt;
+  }
+
   .createpost h5{
     font-weight: 600;
     font-size: 10pt;
@@ -140,13 +146,8 @@ main {
 .popNovaImagem span{
  width: max-content;
 }
-.imagemAtual{
- background-size: contain;
-
-}
-
 img{
-  image-rendering: auto;
+  image-rendering: optimizeSpeed;
 }
 
 .popNovaImagem span section{
@@ -250,14 +251,22 @@ img{
   textarea {
     max-width: 100%;
     overflow: auto;
-    min-height: 70px;
-    font-size: 10pt;
+    min-height: 90px;
+    font-size: 11pt;
+    font-weight: 500;
+
     padding: 10px;
-    color: rgb(205, 205, 205);
+    color: rgb(188, 188, 188);
     margin-bottom: 10px;
-    border: 1px solid var(--cor-borda);
+    border: 1px solid rgba(255, 255, 255, 0.03);
     border-radius: 4px;
     background-color: var(--background-fl)
+  }
+
+  input[type="text"]{
+    font-size: 14pt;
+    color: rgb(202, 202, 202);
+    min-height: 20px;
   }
   
   /* Estilos para os títulos (h5) */
@@ -265,6 +274,7 @@ img{
     font-size: 18px;
     margin-bottom: 5px;
   }
+
   
   @media screen and (max-width: 768px) {
     .conteudoModal{
