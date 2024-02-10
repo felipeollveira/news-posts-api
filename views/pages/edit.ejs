@@ -124,8 +124,9 @@
     const escolherOutraImg = document.getElementById('escolherOutra')
     const btnUpload = document.getElementById('btnUpload')
     const btnSubstituir = document.getElementById('btnSubstituir')
-
-   
+    
+    srcImagemInput.textContent = imagemAtual.src
+       
     async function abrirModal(){
         modal.style.display = 'grid'
  
@@ -135,7 +136,7 @@
         modal.style.display = 'none'
     }
 
-    async function verificarImagem() {
+     function verificarImagem() {
         const urlImagem = imagemTextarea.value.trim();
         const img = new Image();
 
@@ -146,7 +147,7 @@
             
             imagemTextarea.value = ''
             feedbackSpan.textContent = 'A URL fornecida não é uma imagem válida.';
-         
+           
         };
 
         
@@ -186,13 +187,13 @@
     }
 
 
-    async function salvar(){
-        imagemAtual.src = await verificarImagem()
+     function salvar(){
+        imagemAtual.src =  verificarImagem()
         btnSubstituir.style.opacity = '1'
         visualizarImagem.style.display ='block'
         btnUpload.style.display = 'none'
 
-        srcImagemInput.textContent = await verificarImagem()
+        srcImagemInput.textContent =  verificarImagem()
 
         fecharModal()
     }
@@ -203,7 +204,7 @@
                 btnSubstituir.style.opacity = '0'
                 btnSubstituir.style.display = 'block'
 
-        
+                srcImagemInput.textContent = ''
                 visualizarImagem.style.display ='none'
   
                 novaImagem.src = ''
