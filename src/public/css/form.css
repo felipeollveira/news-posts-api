@@ -35,10 +35,12 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
   }
 
   .imagemCss img{
     max-height: 500px;
+
   }
 
   .imagemCss:hover .imagemHover {
@@ -92,6 +94,7 @@ main {
 .popNovaImagem {
   display: none;
   position: fixed;
+  overflow: auto;
   top: 0;
   left: 0;
   width: 100%;
@@ -102,6 +105,7 @@ main {
 
 .popNovaImagem .conteudoModal {
   position: absolute;
+
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -141,6 +145,12 @@ img{
   align-items: center;
   justify-items: center;
   gap: 3px;
+ }
+
+ .popNovaImagem img{
+  overflow-block:auto;
+  height: 50vh;
+
  }
 
 
@@ -271,7 +281,8 @@ img{
       display: grid;
      }
      .popNovaImagem img{
-      max-width: 60%;
+   
+      height: 400px;
       justify-content: center;
     }
     
