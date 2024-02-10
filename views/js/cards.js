@@ -108,8 +108,11 @@ const fetchData = async () => {
             popDel.style.display ='grid'
 
             let id = tituloElement.dataset.id
-            tituloSelecionado.textContent = tituloElement.innerHTML;
-            let tituloMarcado = tituloSelecionado.textContent
+
+            let tituloSel = tituloElement.textContent
+
+            tituloSelecionado.textContent = tituloSel;
+            let tituloMarcado = tituloSel
             previaExclusao(tituloMarcado, id);
 
             window.prevExclusaoResult = previaExclusao(tituloMarcado, id);
