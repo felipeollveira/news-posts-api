@@ -5,25 +5,48 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css" >
     <link rel="stylesheet" type="text/css" href="/css/cards.css" >
     <link rel="stylesheet" type="text/css" href="/css/popup.css" >
-
+    <link rel="stylesheet" type="text/css" href="/css/loading.css" >
 
 </head>
 <body class="container">
     <a href="/" class="paginaAnterior">Voltar</a>
 <main>
     <div id="root">
-
+        
+     
     </div>
     <span class="del" id="popDeletar">
-        <div class="popup">
-            <h6></h6>
-            <h1 ><strong id="tituloPubExcluir">Primeira pub</strong></h1>
-            <input type="text" name="tituloDigitado" placeholder=""></input>
-            <section style="display: flex; align-items: center; justify-items: center; gap: 6px;">
-            <p onclick="handleExclusao()">Excluir</p>
-            <p onclick="handleFechaExclusao()">Agora não</p>
-            </section>
+        <div class="popup" >
+
+            <div class="loading-overlay" id="loadingOverlay">
+                    <div class="loading-spinner"></div>
+                <div class="loading-text">Excluindo...</div>
+                </div>
+
+            <section id="contentPop">
+                <h6></h6>
+                <h1><strong id="tituloPubExcluir">Primeira pub</strong></h1>
+
+                <span class="feedback" id="feedbackExclusao"></span>
             
+                
+                <input type="text" name="tituloDigitado" placeholder="Digite aqui" autocomplete="off"></input>   
+
+                <section style="display: flex; align-items: center; justify-items: center; gap: 6px;">
+
+
+
+                    
+                <p onclick="handleExclusao()" id="btnExcluir">Excluir</p>
+                <p onclick="handleFechaExclusao()" id="btnFechar">Agora não</p>
+
+                </section>
+                
+                
+
+            </div>
+
+            </section>
         </div>
     </span>
     
@@ -32,16 +55,22 @@
 <footer>
     <%- include('../partials/footer'); %>
 </footer>
+<script type="text/javascript" src="/static/js/cards.js"></script>
+
 <script>
     const popDel = document.getElementById('popDeletar')
     const tituloSelecionado = document.getElementById('tituloPubExcluir')
+    const btnExcluir = document.getElementById('btnExcluir')
+    const btnFechar = document.getElementById('btnFechar')
+    const popExclusao = document.getElementById('contentPop')
+    const feedbackExclusao = document.getElementById('feedbackExclusao')
 
-   
+    const loadingOverlay = document.getElementById('loadingOverlay');
 
-
-    
     function handleFechaExclusao(){
         popDel.style.display ='none'
+        loadingOverlay.style.display = 'none'
+        document.querySelector('input[name="tituloDigitado"]').value = ''
     }
 
 </script>
@@ -49,7 +78,7 @@
 
 <script type="text/javascript" src="/static/js/atualiz.js"></script>
 <script type="text/javascript" src="/static/js/data/data.js"></script>
-<script type="text/javascript" src="/static/js/cards.js"></script>
+
 
 </body>
 </html>

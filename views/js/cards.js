@@ -1,3 +1,5 @@
+
+
 const root = document.getElementById('root');
 const apiUrl =  'https://db-pubs.vercel.app';
 
@@ -73,6 +75,7 @@ const fetchData = async () => {
 
           let imgDelete = document.createElement('img')
           imgDelete.setAttribute('src','/img/delete.png')
+          imgDelete.setAttribute('id','iconDel')
 
           let imgModify = document.createElement('img')
           imgModify.setAttribute('src','/img/modify.png')
@@ -97,57 +100,75 @@ const fetchData = async () => {
           
          
 
-          function previaExclusao(tituloSelecionado, id){
-            return {tituloSelecionado, id}
-          }
-
+         
           
           imgDelete.addEventListener("click", function() {
             popDel.style.display ='grid'
 
             let id = tituloElement.dataset.id
             tituloSelecionado.textContent = tituloElement.innerHTML;
+            let tituloMarcado = tituloSelecionado.textContent
+            previaExclusao(tituloMarcado, id);
 
-  
-            previaExclusao(tituloSelecionado, id);
+            window.prevExclusaoResult = previaExclusao(tituloMarcado, id);
+
+
           });
 
+          function previaExclusao(tituloMarcado, id) {
+            return { tituloMarcado, id };
+        }
 
-          function handleExclusao(){
-            const tituloDigitado = document.querySelector('input[name="tituloDigitado"]').value;
-            const { tituloSelecionado, id } = previaExclusao()
 
-            if (tituloDigitado === tituloSelecionado) {
-              fetch('/posts/', {
-                method: 'POST',
-                body: JSON.stringify({ id }),
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-              })
-              .then(response => {
-                 location.reload() 
-                if (response.ok) {
-                    alert('Post excluído com sucesso');   
-                    handleFechaExclusao()
-                } else {
-                  console.error('Erro ao enviar a solicitação: ', response.status);
-                }
-              })
-              .catch(error => {
-                console.error('Erro ao enviar a solicitação: ', error);
-              })
-              .finally(() => {
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
-            });
-            } else {
-              alert('Exclusão cancelada');
-            }
-          };
-          
-          
+  
+
+        window.handleExclusao = () => {
+          const tituloDigitado = document.querySelector('input[name="tituloDigitado"]').value;
+      
+          if (tituloDigitado === '') {
+            feedbackExclusao.textContent = 'Digite o titulo completo!'
+            feedbackExclusao.style.display = 'grid'
+          } else {
+              const { tituloMarcado, id } = window.prevExclusaoResult;
+      
+              if (tituloDigitado === tituloMarcado) {
+                feedbackExclusao.style.display = 'none'
+                loadingOverlay.style.display = 'flex'
+                popExclusao.style.display = 'none'
+      
+                  fetch('/posts/', {
+                      method: 'POST',
+                      body: JSON.stringify({ id }),
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                  })
+                  .then(response => {
+                      if (response.ok) {
+                          handleFechaExclusao();
+                              location.reload()
+  
+                      } else {
+                         throw new Error(`Erro ao excluir o post: ${response.statusText}`);
+                         //vai pro catch
+                      }
+                  })
+                  .catch(error => {
+                      console.error(error);
+                      loadingOverlay.style.display = 'none'
+                      feedbackExclusao.textContent = 'Não foi possivel fazer a exclusão'
+                      feedbackExclusao.style.display = 'grid'
+                      popExclusao.style.display = 'grid'
+                  })
+                
+              } else {
+                feedbackExclusao.textContent = 'Titulo digitado não corresponde ao da publicação selecionada.'
+                feedbackExclusao.style.display = 'grid'
+              }
+          }
+      };
+      
+        
 
             imgModify.addEventListener("click", function() {
             let titulocard = tituloElement.textContent;

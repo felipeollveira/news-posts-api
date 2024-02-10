@@ -9,13 +9,19 @@
     z-index: 9998; 
 }
 
+.feedback{
+    color: rgb(168, 9, 9);
+    display: none;
+}
+
+
 .popup {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 70%;
+    width: auto;
     transform: translate(-50%, -50%);
-    background-color: var(--background-fl);
+    background-color: var(--background);
     border: 1px solid var(--cor-borda);
     padding: 20px;
     color: white;
@@ -24,13 +30,14 @@
     z-index: 9999; 
 }
 
-.popup h1 {
+.popup section h1 {
     font-size: 18pt;
     text-align: left;
-    width: auto;
+    max-width: 90%;
     margin-bottom: 10px;
     color: rgb(205, 205, 205);
 }
+
 #tituloPubExcluir{
     color: var(--colorsystem);
     cursor: context-menu;
@@ -41,28 +48,44 @@
     text-decoration:underline;
 }
 
-.popup h1:before{
+.popup section h1:before{
     color: rgb(205, 205, 205);
     content: "Digite o título para confirmar exclusão: ";
 }
-.popup h6:before{
+.popup section h6{
+    width: 100%;
+    text-align: left;
+    margin-bottom: 18px;
+}
+.popup section h6:before{
     content: "Excluir publicação";
-    color: rgba(230, 230, 230, 0.131);
+    
+    color: rgb(43, 43, 43);
     font-size: 12pt;
 }
 
-.popup input {
+.popup section input {
     width: 100%;
     padding: 4px;
     height: 50px;
     color: white;
     resize: none;
     margin-bottom: 10px;
-    background-color: transparent;
-    border:1px solid var(--cor-borda);
+    background-color: rgba(255, 255, 255, 0.016);
+    border: none;
+    border-radius: 6px;
 }
 
-.popup p:first-child {
+.popup section input::placeholder{
+    color: #ffffff0f;
+}
+
+.popup section input:focus {
+    outline: none;
+}
+
+
+.popup section p:first-child {
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
@@ -70,7 +93,7 @@
     border-radius: 5px;
     cursor: pointer;
 }
-.popup p:last-child {
+.popup section p:last-child {
     padding: 10px 20px;
     color: #fff;
     border: none;
@@ -78,6 +101,6 @@
     cursor: pointer;
 }
 
-.popup p:first-child:hover {
+.popup section p:first-child:hover {
     background-color: #0056b3;
 }
