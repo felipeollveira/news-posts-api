@@ -10,6 +10,9 @@ const sessionSecret = process.env.private_key
 const cookieParser = require('cookie-parser');
 const { run } = require('./sql/connect');
 
+const compression = require('compression');
+
+server.use(compression());
 
 
 server.use(cookieParser());

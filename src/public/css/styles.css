@@ -6,6 +6,7 @@
   src: url('../fonts/proximanova/Proxima.ttf');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 .root{
@@ -37,6 +38,8 @@
   box-sizing: border-box;
   padding: 0px;
   margin: 0;
+  font-family: var(--body-font);
+  font-weight: 500;
 }
 
 body,
@@ -46,19 +49,32 @@ button {
   font-size: var(--normal-font-size);
 
 }
-
-
+main{
+  padding: 10%;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
 
 .paginaAnterior {
-  background: var(--background);
+
   position: fixed;
-  top: 0;
-  padding-bottom: 6px;
+  width: auto;
+  left: 1%;
+  border-radius: 4px;
+  padding: 6px;
+}
+.paginaAnterior span{
+font-weight: bold;
 }
 
 a{
   text-decoration: none;
   width: 100%;
+  color: var(--colorsystem);
+  
+}
+a:hover{
+  text-decoration: underline;
 }
 
 img {

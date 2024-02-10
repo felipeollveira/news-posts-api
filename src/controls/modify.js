@@ -26,7 +26,7 @@ const deleteCard = async (req, res, next) => {
       }else{
         await attVersion();
 
-      return res.status(200).json({ message: MENSAGEM_EXCLUSAO_SUCESSO });
+      return res.status(200).redirect('/posts')
       }
 
       
@@ -44,7 +44,6 @@ const deleteCard = async (req, res, next) => {
 
 
 
-const MENSAGEM_EXCLUSAO_SUCESSO = 'Documento excluído com sucesso.';
 const MENSAGEM_EXCLUSAO_ERRO = 'Erro no servidor ao excluir documento.';
 
 
@@ -72,7 +71,8 @@ const editPost = async (req, res) => {
 
         if (result) {
             await attVersion();
-            return res.status(200).json({ mensagem: 'Post atualizado com sucesso.' });
+                return res.status(200).redirect(`/posts/`);
+   
         } else {
             console.error('Nenhuma linha foi atualizada.');
             return res.status(404).json({ mensagem: 'Post não encontrado ou não foi modificado.' });

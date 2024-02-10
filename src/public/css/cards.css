@@ -40,9 +40,28 @@ body{
     display: grid;
     align-items: center;
 }
+
+.cardtitle{
+    font-weight:500;
+    font-size: 14pt;
+    color: white;
+}
+
+.cardtitle::before{
+    content: '" ' ;
+    font-size: 14pt;
+    color: var(--colorsystem);
+}
+.cardtitle::after{
+    content: ' "';
+    font-size: 14pt; 
+    color: var(--colorsystem);
+}
+
 .titulos h6{
-    font-size: 12pt;
+    font-size: 10pt;  
     color: rgba(255, 255, 255, 0.147);
+    margin-left: 12px;
 }
 .titulos h6:before{
     content: "Publicado em ";

@@ -28,7 +28,7 @@ const post_go_db = async (req, res, next) => {
         });
 
         await attVersion()
-        res.sendStatus(200);
+        res.status(200).redirect('/');;
 
     } catch (error) {
         console.error('Erro na criação do post:', error);

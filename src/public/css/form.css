@@ -6,7 +6,6 @@ background-color: var(--background);
 }
 
 main {
-    padding: 10px;
     display: grid;
     gap:1%;
     grid-template-columns: 75% 25%;
@@ -28,6 +27,17 @@ main {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .createpost h1{
+    margin-bottom: 6px;
+  }
+
+  .createpost h5{
+    font-weight: 600;
+    font-size: 10pt;
+    color: rgb(230, 230, 230);
+    padding-top: 8px;
   }
 
   .imagemCss{
@@ -238,9 +248,12 @@ img{
   input[type="text"],
   input[type="file"],
   textarea {
-    width: 100%;
+    max-width: 100%;
+    overflow: auto;
+    min-height: 70px;
+    font-size: 10pt;
     padding: 10px;
-    color: white;
+    color: rgb(205, 205, 205);
     margin-bottom: 10px;
     border: 1px solid var(--cor-borda);
     border-radius: 4px;

@@ -76,9 +76,11 @@ const fetchData = async () => {
           let imgDelete = document.createElement('img')
           imgDelete.setAttribute('src','/img/delete.png')
           imgDelete.setAttribute('id','iconDel')
+          imgDelete.setAttribute('alt','icon of post delete')
 
           let imgModify = document.createElement('img')
           imgModify.setAttribute('src','/img/modify.png')
+          imgModify.setAttribute('alt','icon of edit post')
 
           let titulos = document.createElement('section')
           titulos.setAttribute('class', 'titulos')

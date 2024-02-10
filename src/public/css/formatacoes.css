@@ -19,6 +19,7 @@
   }
 
   .formatos h1 {
+    
     display: none;
   }
 }
@@ -39,6 +40,7 @@
   .formatos h1 {
     font-size: 24px;
     text-align: center;
+    margin-bottom: 6px;
     color: var(--colorsystem);
     font-weight: 700;
   }
