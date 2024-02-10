@@ -46,10 +46,27 @@ const deleteCard = async (req, res, next) => {
 
 const MENSAGEM_EXCLUSAO_ERRO = 'Erro no servidor ao excluir documento.';
 
+function sanitizeInput(input) {
+
+    const sanitizedInput = input
+    .replace(/</g, '&lt;') 
+  
+    return sanitizedInput;
+  }
+
 
 const editPost = async (req, res) => {
     const tituloSearch = req.params.title;
     const { titulo, introducao, assunto, conclusao, imagem } = req.body;
+
+    if(!titulo) return res.status(401).redirect(`/posts/${tituloSearch}`)
+
+    const tituloSanitized = sanitizeInput(titulo);
+    const introducaoSanitized = sanitizeInput(introducao);
+    const assuntoSanitized = sanitizeInput(assunto);
+    const conclusaoSanitized = sanitizeInput(conclusao);
+
+
 
     try {
         await client.connect();
@@ -59,10 +76,10 @@ const editPost = async (req, res) => {
 
         const updateValues = {
             $set: {
-                titulo: titulo || undefined,
-                introducao: introducao || undefined,
-                desenvolvimento: assunto || undefined,
-                conclusao: conclusao || undefined,
+                titulo: tituloSanitized || undefined,
+                introducao: introducaoSanitized || undefined,
+                desenvolvimento: assuntoSanitized || undefined,
+                conclusao: conclusaoSanitized || undefined,
                 imagem: imagem || undefined
             }
         };

@@ -7,9 +7,27 @@ require('dotenv').config();
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
+
+function sanitizeInput(input) {
+
+    const sanitizedInput = input
+    .replace(/</g, '&lt;') 
+  
+    return sanitizedInput;
+  }
+
 const post_go_db = async (req, res, next) => {
     const { titulo, introducao, assunto, conclusao, imagem } = req.body;
-    const timestamp = new Date().toISOString();
+
+    if(!titulo) return res.status(404).redirect('/')
+
+    const tituloSanitized = sanitizeInput(titulo);
+    const introducaoSanitized = sanitizeInput(introducao);
+    const assuntoSanitized = sanitizeInput(assunto);
+    const conclusaoSanitized = sanitizeInput(conclusao);
+
+    const timestamp = new Date().toLocaleString('pt-BR', { timeZone: 'UTC' });
+
     const autor = process.env.AUTOR || 'felipeoliveira';
 
     try {
@@ -18,17 +36,17 @@ const post_go_db = async (req, res, next) => {
         const pubCollection = client.db('posts').collection('pubs');
 
         const result = await pubCollection.insertOne({
-            titulo,
-            introducao,
-            desenvolvimento: assunto,
-            conclusao,
+            titulo: tituloSanitized,
+            introducao: introducaoSanitized || undefined,
+            desenvolvimento: assuntoSanitized || undefined,
+            conclusao: conclusaoSanitized || undefined,
+            imagem: imagem || undefined,
             data: timestamp,
             autor,
-            imagem,
         });
 
         await attVersion()
-        res.status(200).redirect('/');;
+        res.status(200).redirect('/');
 
     } catch (error) {
         console.error('Erro na criação do post:', error);
