@@ -126,6 +126,7 @@
     const btnSubstituir = document.getElementById('btnSubstituir')
     
     srcImagemInput.textContent = imagemAtual.src
+
        
     async function abrirModal(){
         modal.style.display = 'grid'
@@ -155,6 +156,7 @@
 
       
         img.onload = function() {
+            btnSubstituir.style.display ='block'
             btnRemoverImg.style.display = 'block'
             novaImagem.src = urlImagem;
             novaImagem.style.display = 'block';
