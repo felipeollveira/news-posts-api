@@ -124,7 +124,7 @@ const fetchData = async () => {
 
         window.handleExclusao = () => {
           const tituloDigitado = document.querySelector('input[name="tituloDigitado"]').value;
-      
+   
           if (tituloDigitado === '') {
             feedbackExclusao.textContent = 'Digite o titulo completo!'
             feedbackExclusao.style.display = 'grid'
@@ -162,9 +162,12 @@ const fetchData = async () => {
                   })
                 
               } else {
-                feedbackExclusao.textContent = 'Titulo digitado não corresponde ao da publicação selecionada.'
-                feedbackExclusao.style.display = 'grid'
+                //document.querySelector('input[name="tituloDigitado"]').value = ''
+                feedbackExclusao.style.display = 'grid';
+                feedbackExclusao.textContent = 'Titulo digitado não corresponde ao da publicação selecionada'
+
               }
+              
           }
       };
       
