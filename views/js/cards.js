@@ -34,17 +34,23 @@ const removerCamadaCinza = () => {
   }
 };
 
+
+
 const fetchData = async () => {
   exibirCamadaCinza('Buscando posts...','white','0.5'); 
     try {
 
+
       const apiUrl = 'https://db-pubs.vercel.app';
-        const cachedResponse = localStorage.getItem('apiData');
-        let data = cachedResponse ? JSON.parse(cachedResponse) : null;
+      const cachedResponse = localStorage.getItem('apiData');
+
+      let data = cachedResponse ? JSON.parse(cachedResponse) : null;
+       // let versao = data.version
+
 
        
     
-        if (!data) {
+        if (apiUrl) {
           // Se os dados não estiverem na cache, buscar da API e armazenar
           const response = await fetch(apiUrl);
           data = await response.json();
@@ -151,7 +157,7 @@ const fetchData = async () => {
                   .then(response => {
                       if (response.ok) {
                           handleFechaExclusao();
-                              location.reload()
+                          location.reload()
   
                       } else {
                          throw new Error(`Erro ao excluir o post: ${response.statusText}`);

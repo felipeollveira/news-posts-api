@@ -88,7 +88,7 @@ const editPost = async (req, res) => {
 
         if (result) {
             await attVersion();
-                return res.status(200).redirect(`/posts/`);
+            return res.status(200).redirect(`/posts/`);
    
         } else {
             console.error('Nenhuma linha foi atualizada.');

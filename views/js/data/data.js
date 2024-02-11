@@ -1,3 +1,4 @@
+/*
 const urlApi = 'https://db-pubs.vercel.app';
 
 // Função para obter dados da API
@@ -13,3 +14,5 @@ async function fetchDataFromApi() {
 }
 
 fetchDataFromApi();
+
+*/
