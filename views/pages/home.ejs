@@ -5,12 +5,25 @@
     <link rel="stylesheet" type="text/css" href="/css/form.css" >
     <link rel="stylesheet" type="text/css" href="/css/formatacoes.css" >
     <link rel="stylesheet" type="text/css" href="/css/styles.css" >
+    <link rel="stylesheet" type="text/css" href="/css/loading.css">
+    <link rel="stylesheet" type="text/css" href="/css/popup.css" >
 </head>
 <body class="container">
 <main>
     <div class="createpost">
+
+        <span class="containerPopup" id="popSpan">
+            <div class="popup" id="popLoading" >
+                <div class="loading-overlay" id="loadingOverlay">
+                    <div class="loading-spinner"></div>
+                <div class="loading-text" id="feedbackPost">Publicando...</div>
+                <span class="time"><span id="second"></span><span id="ms"></span></span>
+                </div>
+            </div>
+</span>
+
         <h1>Nova publicação</h1>  
-        <form action="/" method="POST">
+        <form action="/" method="POST" id="form">
         <section>
             <h5>Titulo do novo post</h5>
             <input type="text" maxlength="80" style="width: 100%;" name="titulo">
@@ -126,6 +139,68 @@
     const btnUpload = document.getElementById('btnUpload')
     const displayCasoSemImg = document.getElementById('displayImagem')
 
+    const loading = document.getElementById('popSpan')
+    const loadingConcertar = document.getElementById('loadingOverlay')
+    const feedbackPost = document.getElementById('feedbackPost')
+
+
+    //Evento submit
+    const formulario = document.querySelector('form')
+    formulario.addEventListener("submit", eventPost);
+
+    //temporizador
+    function timer(feedback) {
+        let second =  0;
+        let millisecond = 0;
+        const secondElement = document.getElementById('second');
+        const millisecondElement = document.getElementById('ms');
+
+        function padZero(num) {
+            return num < 10 ? '0' + num : num;
+        }
+
+        function updateTimer() {
+            secondElement.innerText = padZero(second);
+            millisecondElement.innerText = padZero(millisecond);
+        }
+
+        let interval;
+
+
+        if (feedback === "start") {
+            interval = setInterval(function() {
+                millisecond += 10;
+                if (millisecond === 1000) {
+                    millisecond = 0;
+                    second++;
+                }
+                if(second > 3){
+                    secondElement.style.color = 'red'
+                    millisecondElement.style.color = 'red'
+                }
+                updateTimer();
+            }, 10);
+        }
+
+        if (feedback === "end") {
+                clearInterval(interval); 
+        }
+}
+
+    //evento de submit
+    function eventPost() {
+            loading.style.display = 'flex'; 
+            loadingConcertar.style.display = 'flex'; 
+            timer("start")
+        
+        }
+    timer("end")
+
+
+
+
+
+    // Popup de imagens
     displayCasoSemImg.style.display = 'none'
     btnUpload.style.display = 'grid' 
     

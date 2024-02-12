@@ -15,12 +15,13 @@
         
      
     </div>
-    <span class="del" id="popDeletar">
+    <span class="containerPopup" id="popDeletar">
         <div class="popup" >
 
             <div class="loading-overlay" id="loadingOverlay">
                     <div class="loading-spinner"></div>
                 <div class="loading-text">Excluindo...</div>
+                <span class="time"><span id="second"></span><span id="ms"></span></span>
                 </div>
 
             <section id="contentPop">
@@ -65,7 +66,46 @@
     const popExclusao = document.getElementById('contentPop')
     const feedbackExclusao = document.getElementById('feedbackExclusao')
 
-    const loadingOverlay = document.getElementById('loadingOverlay');
+    function timer(feedback) {
+        let second =  0;
+        let millisecond = 0;
+        const secondElement = document.getElementById('second');
+        const millisecondElement = document.getElementById('ms');
+
+        function padZero(num) {
+            return num < 10 ? '0' + num : num;
+        }
+
+        function updateTimer() {
+            secondElement.innerText = padZero(second);
+            millisecondElement.innerText = padZero(millisecond);
+        }
+
+        let interval;
+
+
+        if (feedback === "start") {
+            interval = setInterval(function() {
+                millisecond += 10;
+                if (millisecond === 1000) {
+                    millisecond = 0;
+                    second++;
+                }
+                if(second > 3){
+                    secondElement.style.color = 'red'
+                    millisecondElement.style.color = 'red'
+                }
+                updateTimer();
+            }, 10);
+        }
+
+        if (feedback === "end") {
+                clearInterval(interval); 
+}}
+
+
+    const loadingOverlay = document.getElementById('loadingOverlay');  
+    loadingOverlay.style.display = 'none'
 
     function handleFechaExclusao(){
         popDel.style.display ='none'

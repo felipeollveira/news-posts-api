@@ -63,6 +63,7 @@ const buscarPostNaAPI = async (tituloDoPost) => {
       // Se os dados não estiverem na cache, buscar da API e armazenar
       const response = await fetch(apiUrl);
       data = await response.json();
+      
       localStorage.setItem('apiData', JSON.stringify(data));
     }
 

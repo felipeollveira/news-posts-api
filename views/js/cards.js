@@ -143,6 +143,7 @@ const fetchData = async () => {
               const { tituloMarcado, id } = window.prevExclusaoResult;
       
               if (tituloDigitado === tituloMarcado) {
+                timer("start")
                 feedbackExclusao.style.display = 'none'
                 loadingOverlay.style.display = 'flex'
                 popExclusao.style.display = 'none'
@@ -158,11 +159,13 @@ const fetchData = async () => {
                       if (response.ok) {
                           handleFechaExclusao();
                           location.reload()
+                         
   
                       } else {
                          throw new Error(`Erro ao excluir o post: ${response.statusText}`);
                          //vai pro catch
-                      }
+                      } 
+                      timer("end")
                   })
                   .catch(error => {
                       console.error(error);
