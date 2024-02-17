@@ -14,12 +14,27 @@
 }
 
  .hello{
-  position: fixed;
   display: none;
-  padding: 6px;
-  background-color: rgba(0, 0, 0, 0.137);
-  color: rgb(206, 206, 206);
-  transform: translateY(20px);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--background);
+  border: 1px solid var(--cor-borda);
+  padding: 20px;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.662);
+  z-index: 9999; 
+ }
+
+ .hello section{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+ }
+ .hello section p{
+  padding: 4px;
  }
 
 :root {

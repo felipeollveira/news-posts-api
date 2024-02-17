@@ -5,13 +5,24 @@ require('dotenv').config();
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
-const generateAuthToken = (userId, expiresIn = '1h') => {
-  return jwt.sign({ userId }, process.env.private_key, { expiresIn, algorithm: 'HS256' });
-};
-
 const loginPage = (req, res) => {
   if (req.cookies.jwt) res.redirect('/');
   else res.render('pages/login');
+};
+
+const generateAuthToken = (login, expiresIn = '1h') => {
+  return jwt.sign({ login }, process.env.private_key, { expiresIn, algorithm: 'HS256' });
+};
+
+const tipoLogin = (req) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    const decodedToken = jwt.verify(token, process.env.private_key);
+    return decodedToken.login;
+  } else {
+    return null; 
+  }
 };
 
 const isAuthenticated = (req, res, next) => {
@@ -19,7 +30,6 @@ const isAuthenticated = (req, res, next) => {
 
   if (token) {
     jwt.verify(token, process.env.private_key, (err, decoded) => {
-      if(loginType === '') res.clearCookie('jwt');
       if (err) {
         if (err.name === 'TokenExpiredError') {
           console.error('Token expirado:', err);
@@ -31,18 +41,12 @@ const isAuthenticated = (req, res, next) => {
           return res.redirect('/login');
         }
       } else {
-        // Adicione o nome de usuário à sessão
-        req.session.userName = loginType;
-
-        // Verifique se o ID do usuário no token corresponde ao ID do usuário atual
         const userIdFromToken = decoded.id;
-        const userIdFromRequest = req.params.user; // ou de onde quer que venha o ID do usuário na sua aplicação
+        const userIdFromRequest = req.params.user;
 
         if (userIdFromToken === userIdFromRequest) {
-          // O ID do usuário no token corresponde ao ID do usuário atual
           return next();
         } else {
-          // O ID do usuário no token não corresponde ao ID do usuário atual
           console.error('ID do usuário no token não corresponde ao ID do usuário atual');
           return res.redirect('/login');
         }
@@ -54,13 +58,6 @@ const isAuthenticated = (req, res, next) => {
 };
 
 
-
-let loginType = '';
-
-const tipoLogin = (login) => {
-  loginType = login;
-}
-
 const autLogin = async (req, res) => {
   const { login, senha } = req.body;
   
@@ -71,8 +68,14 @@ const autLogin = async (req, res) => {
       return res.status(400).send('Credenciais incompletas');
     }
 
-    tipoLogin(login);
+    if(login === 'convidado' || senha === 'senhasegura') { 
+      const token = generateAuthToken(login);
+      res.cookie('jwt', token, { httpOnly: true, maxAge: 600 * 1000 });
+      return res.status(200).redirect(`/`);
 
+    }
+
+    
     const usersCollection = client.db('posts').collection('admins');
     const user = await usersCollection.findOne({ name: login });
 
@@ -96,16 +99,16 @@ const autLogin = async (req, res) => {
 
 const homePage = (req, res) => {
   //res.clearCookie('jwt');
- //console.log(req.session.userName);
-
-  res.render('pages/home', { user: req.session.userName });
+ const login = tipoLogin(req);
+  res.render('pages/home', { user: login });
 };
 
  
 const postPage = (req, res) => {
-  //const key = process.env.CHAVE_SECRETA
-  res.render('pages/posts', { user: req.session.userName });
+  const login = tipoLogin(req);
+  res.render('pages/posts', { user: login });
 };
+
 
 
 

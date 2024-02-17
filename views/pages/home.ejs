@@ -10,10 +10,20 @@
 </head>
 <body class="container">
     <span class="hello">
-        <p>Olá, <%= user %> estava esperando por você!</p>
+        <section>
+              <p>Olá <%= user %>, estava esperando por você!</p>
         <p>Seja bem vindo a este pequeno sistema de CMS, faço as publicações por aqui...</p>
-        <p>Antes de iniciar, me diga: de onde vens?</p>
-        <input type="text" placeholder="linkedIn, github">
+        <label for="escolha">Antes de iniciar, me diga: de onde vens?</label>
+            <select id="escolha" name="escolha">
+            <option value="opcao1">Github</option>
+            <option value="opcao2">LinkedIn</option>
+            <option value="opcao3">Instagram</option>
+            <option value="opcao3">Indicação</option>
+            <option value="opcao3">Outros</option>
+            </select>
+
+        </section>
+      
     </span>
 
 <main>
