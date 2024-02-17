@@ -9,6 +9,13 @@
     <link rel="stylesheet" type="text/css" href="/css/popup.css" >
 </head>
 <body class="container">
+    <span class="hello">
+        <p>Olá, <%= user %> estava esperando por você!</p>
+        <p>Seja bem vindo a este pequeno sistema de CMS, faço as publicações por aqui...</p>
+        <p>Antes de iniciar, me diga: de onde vens?</p>
+        <input type="text" placeholder="linkedIn, github">
+    </span>
+
 <main>
     <div class="createpost">
 
@@ -21,7 +28,7 @@
                 </div>
             </div>
 </span>
-
+        
         <h1>Nova publicação</h1>  
         <form action="/" method="POST" id="form">
         <section>
@@ -48,7 +55,9 @@
                 <img src="" id="imagemAtual" class="imagemAtual" name="srcimagem">
             </section> 
             <span onclick="abrirModal()" id="btnUpload" style="display: none;" class="btnUpload">Upload de imagem</span>
-            
+
+            <textarea style="display: none;" id="tipoUser" name="user"></textarea>
+
             <section class="popNovaImagem" id="popImagem">
                 <section class="conteudoModal">
                  <h1 id="feed">Upload de uma nova imagem</h1> 
@@ -75,7 +84,7 @@
         </section>
 
         </section>
-        
+
         <section>
             <h5>Conclusão</h5>
             <textarea style="width: 100%; " name="conclusao"></textarea>
@@ -142,11 +151,28 @@
     const loading = document.getElementById('popSpan')
     const loadingConcertar = document.getElementById('loadingOverlay')
     const feedbackPost = document.getElementById('feedbackPost')
+    const tipoUser = document.getElementById('tipoUser')
+ 
 
-
+    const user = '<%= user %>';
+    //user adm ou convidado
+    tipoUser.textContent = '<%= user %>';
+    
+    
     //Evento submit
     const formulario = document.querySelector('form')
     formulario.addEventListener("submit", eventPost);
+
+
+    if (user === 'convidado') {
+    // Selecionar o botão pelo seu atributo 'type' e ocultá-lo
+    formulario.setAttribute('action', '');
+    const botaoSubmit = document.querySelector('button[type="submit"]');
+    botaoSubmit.style.display ='none'
+    }
+
+    
+
 
     //temporizador
     function timer(feedback) {

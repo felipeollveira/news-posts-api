@@ -130,9 +130,7 @@ const fetchData = async () => {
             return { tituloMarcado, id };
         }
 
-
-  
-
+       
         window.handleExclusao = () => {
           const tituloDigitado = document.querySelector('input[name="tituloDigitado"]').value;
    
@@ -143,6 +141,11 @@ const fetchData = async () => {
               const { tituloMarcado, id } = window.prevExclusaoResult;
       
               if (tituloDigitado === tituloMarcado) {
+                if(user === 'convidado'){
+                  feedbackExclusao.textContent = 'Você é um usuário convidado, não apresse as coisas rs'
+                  feedbackExclusao.style.display = 'grid'
+                  return 0;
+                }
                 timer("start")
                 feedbackExclusao.style.display = 'none'
                 loadingOverlay.style.display = 'flex'

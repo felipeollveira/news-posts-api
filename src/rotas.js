@@ -11,7 +11,7 @@ const path = require('path');
 // PROCURANDO PELA PASTA VIEWS no VERCEL
 root.set('views', path.join(__dirname, '..', 'views'));
 const { deleteCard, editPost } = require('./controls/modify');
-const { loginPage, autLogin, homePage, postPage, isAuthenticated } = require('./controls/users');
+const { loginPage, autLogin, homePage, postPage, isAuthenticated, setUserTypeInSession } = require('./controls/users');
 const { post_go_db} = require('./controls/newpost');
 
 
@@ -24,7 +24,7 @@ const { post_go_db} = require('./controls/newpost');
 root.get('/login', loginPage)
 root.post('/login', autLogin)
 
-//rotas protegidas
+//rotas do adm
 root.use(isAuthenticated)
 
 
@@ -37,7 +37,7 @@ root.get('/posts/', postPage)
 
 root.get('/posts/:title/', (req, res) => {
     const title = req.params.title;
-    res.render('pages/edit', { title });
+    res.render('pages/edit', { title, user: req.session.userName });
 
 });
 

@@ -13,7 +13,14 @@
   color: white;
 }
 
- 
+ .hello{
+  position: fixed;
+  display: none;
+  padding: 6px;
+  background-color: rgba(0, 0, 0, 0.137);
+  color: rgb(206, 206, 206);
+  transform: translateY(20px);
+ }
 
 :root {
 --colorfooter: rgb(43, 43, 43);

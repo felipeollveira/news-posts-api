@@ -149,6 +149,16 @@
  
     formulario.addEventListener("submit", eventPost);
 
+    const user = '<%= user %>';
+   
+
+    if (user === 'convidado') {
+    // Selecionar o botão pelo seu atributo 'type' e ocultá-lo
+    formulario.setAttribute('action', '');
+    const botaoSubmit = document.querySelector('button[type="submit"]');
+    botaoSubmit.style.display ='none'
+    }
+
     //temporizador
     function timer(feedback) {
         let second =  0;
