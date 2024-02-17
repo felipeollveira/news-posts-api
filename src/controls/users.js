@@ -49,7 +49,7 @@ const isAuthenticated = (req, res, next) => {
       }
     });
   } else {
-    return res.redirect('/login');
+    return res.status(401).redirect('/login');
   }
 };
 
