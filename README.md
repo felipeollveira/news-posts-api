@@ -8,8 +8,10 @@ Aqui a mágica acontece; escrevo, edito e excluo todas publicações 🫶
 
   
 ### Você pode visitar
- Criei um login simples de visitação, insisto que tente entrar e apois o uso me contate para um póssivel feedback, iria agregar muito!
+ Criei um login simples de visitação, insisto que tente entrar e apois o uso me contate para um possível feedback, iria agregar muito!
  
     em Username: convidado 
     em senha: senhasegura
 
+
+recente push https://api-blog-git-main-felipeollveiras-projects.vercel.app/login
