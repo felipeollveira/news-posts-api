@@ -68,7 +68,7 @@ const autLogin = async (req, res) => {
       return res.status(400).send('Credenciais incompletas');
     }
 
-    if(login === 'convidado' || senha === 'senhasegura') { 
+    if(login === 'convidado' && senha === 'senhasegura') { 
       const token = generateAuthToken(login);
       res.cookie('jwt', token, { httpOnly: true, maxAge: 600 * 1000 });
       return res.status(200).redirect(`/`);
