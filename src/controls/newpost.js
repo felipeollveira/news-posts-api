@@ -26,7 +26,7 @@ function sanitizeInput(input) {
      
     if (!titulo) return res.status(404).redirect(`/`);
 
-    if (userType != 'convidado') {
+    if (user != 'convidado') {
         const tituloSanitized = sanitizeInput(titulo);
         const introducaoSanitized = sanitizeInput(introducao);
         const assuntoSanitized = sanitizeInput(assunto);
