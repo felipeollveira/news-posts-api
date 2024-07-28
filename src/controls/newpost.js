@@ -18,8 +18,6 @@ function sanitizeInput(input) {
     return sanitizedInput;
   }
 
-
-
   const post_go_db = async (req, res, next) => {
     const { titulo, introducao, assunto, conclusao, imagem, user } = req.body;
     console.log(user)
@@ -32,7 +30,8 @@ function sanitizeInput(input) {
         const assuntoSanitized = sanitizeInput(assunto);
         const conclusaoSanitized = sanitizeInput(conclusao);
     
-        const timestamp = new Date().toLocaleString('pt-BR', { timeZone: 'UTC' });
+        //datas formatadas
+        //const timestamp = new Date().toLocaleString('pt-BR', { timeZone: 'UTC' });
     
         const autor = process.env.AUTOR || 'felipeoliveira';
 
@@ -47,7 +46,7 @@ function sanitizeInput(input) {
                 desenvolvimento: assuntoSanitized || undefined,
                 conclusao: conclusaoSanitized || undefined,
                 imagem: imagem || undefined,
-                data: timestamp,
+                data: new Date(),
                 autor,
             });
 
