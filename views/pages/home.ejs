@@ -73,7 +73,7 @@
                  <h1 id="feed">Upload de uma nova imagem</h1> 
 
                  <span id="feedback" class="feedback"></span>  
-                <textarea style="width: 100%" name="image" placeholder="Cole a url aqui" tabindex="0"></textarea>
+                <textarea style="width: 10%" name="image" placeholder="Cole a url aqui" tabindex="0"></textarea>
 
                 <img src="" alt="nova Imagem" id="novaImagem" style="display: none; margin-bottom: 6px;" >
 
@@ -99,10 +99,17 @@
             <h5>Conclusão</h5>
             <textarea style="width: 100%; " name="conclusao"></textarea>
         </section>
-        <button type="submit">Publicar</button>
-        <a href="/posts/"> Ver publicações </a>
 
-        </form>
+        <div class="buttons">
+            <section>
+
+                <button type="submit">Publicar</button>
+                <a href="/posts/"> Ver publicações </a>
+            </section>
+            
+            <a href="#" onclick="logout()" class="logout">Logout</a>
+        </div>
+    </form>
     </div>
     <div class="formatos">
 
@@ -115,6 +122,34 @@
 </footer>
 
 <script>
+// funcao para deslogar - botao deslogar linha 110
+
+  function logout() {
+    let logoutChoose = prompt('Deseja sair? S/N').toUpperCase()
+    
+    if (logoutChoose == `S`) {
+        fetch('/exit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      if (response.ok) {
+        window.location.href = '/';  // Redireciona para a página inicial
+      } else {
+        alert('Erro ao tentar deslogar.');
+      }
+    })
+    .catch(error => console.error('Erro:', error));
+    } else {
+        return 0
+    }
+  }
+
+
+
+
      const modal = document.getElementById('popImagem')
     const imagemTextarea = document.querySelector('textarea[name="image"]')
     const novaImagem = document.getElementById('novaImagem')
@@ -140,10 +175,9 @@
     const tipoUser = document.getElementById('tipoUser')
  
 
-    const user = '<%= user %>';
     //user adm ou convidado
     tipoUser.textContent = '<%= user %>';
-    
+    const user = '<%= user %>'
     
     //Evento submit
     const formulario = document.querySelector('form')

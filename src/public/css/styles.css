@@ -13,6 +13,23 @@
   color: white;
 }
 
+.buttons{
+  display:grid;
+  grid-template-columns: auto auto; 
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  
+}
+
+.buttons section{
+  min-width: 100px;
+}
+
+.logout{
+  color: rgb(255, 118, 118);
+}
+
  .hello{
   display: none;
   position: fixed;
