@@ -1,8 +1,7 @@
-
-
 const root = document.getElementById('root');
-const apiUrl =  'https://db-pubs.vercel.app';
+const apiUrl = 'https://db-pubs.vercel.app'; // A URL da API.
 
+// Função para exibir a camada cinza (para carregamento ou mensagens)
 const exibirCamadaCinza = (mensagem, corMensagem, opacidadeFundo) => {
   const camadaCinza = document.createElement('div');
   camadaCinza.className = 'camada-cinza';
@@ -22,7 +21,6 @@ const exibirCamadaCinza = (mensagem, corMensagem, opacidadeFundo) => {
   mensagemCarregando.style.color = corMensagem;
 
   camadaCinza.appendChild(mensagemCarregando);
-
   document.body.appendChild(camadaCinza);
 };
 
@@ -30,72 +28,60 @@ const exibirCamadaCinza = (mensagem, corMensagem, opacidadeFundo) => {
 const removerCamadaCinza = () => {
   const camadaCinza = document.querySelector('.camada-cinza');
   if (camadaCinza) {
-      document.body.removeChild(camadaCinza);
+    document.body.removeChild(camadaCinza);
   }
 };
 
-
-
+// Função principal para buscar os dados da API
 const fetchData = async () => {
-  exibirCamadaCinza('Buscando posts...','white','0.5'); 
-    try {
+  exibirCamadaCinza('Buscando posts...', 'white', '0.5'); 
 
-
-      const apiUrl = 'https://db-pubs.vercel.app';
-      const cachedResponse = localStorage.getItem('apiData');
-
-      let data = cachedResponse ? JSON.parse(cachedResponse) : null;
-       // let versao = data.version
-
-
-       
+  try {
+   
+      const response = await fetch(apiUrl);
+      data = await response.json();
+      localStorage.setItem('apiData', JSON.stringify(data));
     
-        if (apiUrl) {
-          // Se os dados não estiverem na cache, buscar da API e armazenar
-          const response = await fetch(apiUrl);
-          data = await response.json();
-          localStorage.setItem('apiData', JSON.stringify(data));
-        }
-        
-      if (data.posts.length !== 0) {
-        for (const post of data.posts) {
+
+    if (data.posts && data.posts.length > 0) {
+      const usuarioLogado = user;  
+      //console.log(data.posts)
+      const postsDoUsuario = data.posts.filter(post => post.autor === usuarioLogado);
+
+      if (postsDoUsuario.length > 0) {
+        postsDoUsuario.forEach(post => {
           let titulo = post.titulo;
           let datapost = post.data;
-          let idpost = post._id
+          let idpost = post._id;
 
-      
-
-          const cards = document.createElement("div")
-          cards.setAttribute('class', 'cards')
-  
+          const cards = document.createElement("div");
+          cards.setAttribute('class', 'cards');
+          
           let tituloElement = document.createElement("h5");
-          tituloElement.setAttribute('class', 'cardtitle')
+          tituloElement.setAttribute('class', 'cardtitle');
           tituloElement.textContent = titulo;
-          tituloElement.setAttribute('data-id', idpost)
+          tituloElement.setAttribute('data-id', idpost);
 
           let dataElement = document.createElement("h6");
-          let dataDezChar = datapost.substring(0,10);
+          let dataDezChar = datapost.substring(0, 10);
           const dataCorreta = dataDezChar.split('-').reverse().join('/');
-          dataElement.textContent = dataCorreta
+          dataElement.textContent = dataCorreta;
 
+          let imgDelete = document.createElement('img');
+          imgDelete.setAttribute('src', '/img/delete.png');
+          imgDelete.setAttribute('id', 'iconDel');
+          imgDelete.setAttribute('alt', 'Icone de excluir post');
 
-          let imgDelete = document.createElement('img')
-          imgDelete.setAttribute('src','/img/delete.png')
-          imgDelete.setAttribute('id','iconDel')
-          imgDelete.setAttribute('alt','icon of post delete')
+          let imgModify = document.createElement('img');
+          imgModify.setAttribute('src', '/img/modify.png');
+          imgModify.setAttribute('alt', 'Icone de editar post');
 
-          let imgModify = document.createElement('img')
-          imgModify.setAttribute('src','/img/modify.png')
-          imgModify.setAttribute('alt','icon of edit post')
+          let titulos = document.createElement('section');
+          titulos.setAttribute('class', 'titulos');
 
-          let titulos = document.createElement('section')
-          titulos.setAttribute('class', 'titulos')
+          let icons = document.createElement('section');
+          icons.setAttribute('class', 'icons');
 
-          let icons = document.createElement('section')
-          icons.setAttribute('class', 'icons')
-
-
-          // Adiciona os elementos ao elemento raiz
           titulos.appendChild(tituloElement);
           titulos.appendChild(dataElement);
           icons.appendChild(imgModify);
@@ -103,129 +89,103 @@ const fetchData = async () => {
 
           cards.appendChild(titulos);
           cards.appendChild(icons);
-          root.appendChild(cards)
+          root.appendChild(cards);
 
-          
-         
-
-         
-          
-          imgDelete.addEventListener("click", function() {
-            popDel.style.display ='grid'
-
-            let id = tituloElement.dataset.id
-
-            let tituloSel = tituloElement.textContent
-
+          imgDelete.addEventListener("click", () => {
+            popDel.style.display = 'grid';
+            let id = tituloElement.dataset.id;
+            let tituloSel = tituloElement.textContent;
             tituloSelecionado.textContent = tituloSel;
-            let tituloMarcado = tituloSel
+            let tituloMarcado = tituloSel;
             previaExclusao(tituloMarcado, id);
-
             window.prevExclusaoResult = previaExclusao(tituloMarcado, id);
-
-
           });
 
           function previaExclusao(tituloMarcado, id) {
             return { tituloMarcado, id };
-        }
+          }
 
-       
-        window.handleExclusao = () => {
-          const tituloDigitado = document.querySelector('input[name="tituloDigitado"]').value;
-   
-          if (tituloDigitado === '') {
-            feedbackExclusao.textContent = 'Digite o titulo completo!'
-            feedbackExclusao.style.display = 'grid'
-          } else {
+          window.handleExclusao = () => {
+            const tituloDigitado = document.querySelector('input[name="tituloDigitado"]').value;
+
+            if (tituloDigitado === '') {
+              feedbackExclusao.textContent = 'Digite o titulo completo!';
+              feedbackExclusao.style.display = 'grid';
+            } else {
               const { tituloMarcado, id } = window.prevExclusaoResult;
-      
+              
               if (tituloDigitado === tituloMarcado) {
-                if(user === 'convidado'){
-                  feedbackExclusao.textContent = 'Você é um usuário convidado, não apresse as coisas rs'
-                  feedbackExclusao.style.display = 'grid'
+                if (user === 'convidado') {
+                  feedbackExclusao.textContent = 'Você é um usuário convidado, não apresse as coisas rs';
+                  feedbackExclusao.style.display = 'grid';
                   return 0;
                 }
-                timer("start")
-                feedbackExclusao.style.display = 'none'
-                loadingOverlay.style.display = 'flex'
-                popExclusao.style.display = 'none'
-      
-                  fetch('/posts/', {
-                      method: 'POST',
-                      body: JSON.stringify({ id }),
-                      headers: {
-                          'Content-Type': 'application/json',
-                      },
-                  })
-                  .then(response => {
-                      if (response.ok) {
-                          handleFechaExclusao();
-                          location.reload()
-                         
-  
-                      } else {
-                         throw new Error(`Erro ao excluir o post: ${response.statusText}`);
-                         //vai pro catch
-                      } 
-                      timer("end")
-                  })
-                  .catch(error => {
-                      console.error(error);
-                      loadingOverlay.style.display = 'none'
-                      feedbackExclusao.textContent = 'Não foi possivel fazer a exclusão'
-                      feedbackExclusao.style.display = 'grid'
-                      popExclusao.style.display = 'grid'
-                  })
-                
+                timer("start");
+                feedbackExclusao.style.display = 'none';
+                loadingOverlay.style.display = 'flex';
+                popExclusao.style.display = 'none';
+
+                fetch('/posts/', {
+                  method: 'POST',
+                  body: JSON.stringify({ id }),
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                })
+                .then(response => {
+                  if (response.ok) {
+                    handleFechaExclusao();
+                    location.reload();
+                  } else {
+                    throw new Error(`Erro ao excluir o post: ${response.statusText}`);
+                  }
+                  timer("end");
+                })
+                .catch(error => {
+                  console.error(error);
+                  loadingOverlay.style.display = 'none';
+                  feedbackExclusao.textContent = 'Não foi possível fazer a exclusão';
+                  feedbackExclusao.style.display = 'grid';
+                  popExclusao.style.display = 'grid';
+                });
               } else {
-                //document.querySelector('input[name="tituloDigitado"]').value = ''
                 feedbackExclusao.style.display = 'grid';
-                feedbackExclusao.textContent = 'Titulo digitado não corresponde ao da publicação selecionada'
-
+                feedbackExclusao.textContent = 'Título digitado não corresponde ao da publicação selecionada';
               }
-              
-          }
-      };
-      
-        
-
-            imgModify.addEventListener("click", function() {
-            let titulocard = tituloElement.textContent;
-            
-            try {
-                let titulocardEncoded = encodeURIComponent(titulocard);
-                let url = `/posts/${titulocardEncoded}`;
-        
-                window.location.href = url;
-            
-            } catch (error) {
-                console.log(error);
             }
-        });
-        
-       
-      
-    }
-} else {
-  setTimeout(() => {
-    exibirCamadaCinza('Não há posts disponiveís','white','0.95');
-  }, 5500);
-}
+          };
 
-} catch (error) {
-  exibirCamadaCinza('Erro interno no servidor','red','0.95');
-       
-  setTimeout(() => {
-    window.location.href = '/';
-  }, 3000);
-}
-finally{
-  removerCamadaCinza(); 
-}
+          imgModify.addEventListener("click", () => {
+            let titulocard = tituloElement.textContent;
+
+            try {
+              let titulocardEncoded = encodeURIComponent(titulocard);
+              let url = `/posts/${titulocardEncoded}`;
+              window.location.href = url;
+            } catch (error) {
+              console.log(error);
+            }
+          });
+        });
+      } else {
+        exibirCamadaCinza('Nenhum post encontrado para o usuário logado! Faca seu primeiro post hoje :)', 'white', '0.95');
+        setTimeout(() => {
+          window.location.href = '/'
+        }, 3000);
+      }
+    } else {
+      setTimeout(() => {
+        exibirCamadaCinza('Não há posts disponíveis', 'white', '0.95');
+      }, 5500);
+    }
+  } catch (error) {
+    exibirCamadaCinza('Erro interno no servidor', 'red', '0.95');
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 3000);
+  } finally {
+    removerCamadaCinza();
+  }
 };
 
-
 fetchData();
-
-

@@ -6,8 +6,9 @@ const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 
 const MENSAGEM_EXCLUSAO_ERRO = 'Erro no servidor ao excluir documento.';
+const MENSAGEM_ERRO_EDICAO = 'Erro ao editar o post.';
 
-const sanitizeInput = (input) => input.replace(/</g, '&lt;'); // Simplificado
+const sanitizeInput = (input) => input.replace(/</g, '&lt;'); // Sanitização simplificada
 
 const connectToDatabase = async () => {  // Função reutilizável para conectar ao banco de dados
     try {
@@ -15,7 +16,7 @@ const connectToDatabase = async () => {  // Função reutilizável para conectar
         return client.db('posts').collection('pubs');
     } catch (error) {
         console.error('Erro ao conectar ao banco de dados:', error);
-        throw error; // Repassa o erro para ser tratado pelo chamador
+        throw error;
     }
 };
 
@@ -27,8 +28,17 @@ const closeDatabaseConnection = async () => { // Função reutilizável para fec
     }
 };
 
+// Função para validar ObjectId
+const isValidObjectId = (id) => {
+    return ObjectId.isValid(id);
+};
+
 const deleteCard = async (req, res) => {
     const { id } = req.body;
+
+    if (!isValidObjectId(id)) {
+        return res.status(400).json({ message: 'ID inválido.' });
+    }
 
     try {
         const pubCollection = await connectToDatabase();
@@ -38,8 +48,8 @@ const deleteCard = async (req, res) => {
             return res.status(404).json({ message: 'Nenhum documento encontrado para exclusão.' });
         }
 
-        await attVersion();
-        return res.status(200).redirect('/posts');
+        await attVersion(); // Atualiza a versão ou realiza outra ação relevante
+        return res.status(200).json({ message: 'Post excluído com sucesso.' });
 
     } catch (error) {
         console.error('Erro ao excluir documento:', error);
@@ -49,12 +59,13 @@ const deleteCard = async (req, res) => {
     }
 };
 
-
 const editPost = async (req, res) => {
     const tituloSearch = req.params.title;
     const { titulo, introducao, assunto, conclusao, imagem } = req.body;
 
-    if (!titulo) return res.status(401).redirect(`/posts/${tituloSearch}`);
+    if (!titulo) {
+        return res.status(400).json({ message: 'Título é obrigatório.' });
+    }
 
     // Sanitização em um único objeto
     const sanitizedData = {
@@ -65,23 +76,27 @@ const editPost = async (req, res) => {
         imagem
     };
 
-
-
     try {
         const pubCollection = await connectToDatabase();
 
+        // Realizando a atualização no MongoDB
         const result = await pubCollection.findOneAndUpdate(
             { titulo: tituloSearch },
-            { $set: sanitizedData }, // Usando o objeto sanitizado diretamente
+            { $set: sanitizedData },
             { returnDocument: 'after' } // Retorna o documento atualizado
         );
+        console.log(result); // Verifique o conteúdo de result para entender sua estrutura
 
-        if (result.value) { // Verifica se o documento foi encontrado e atualizado
+        // Verificando se o resultado contém um documento atualizado
+        if (result) { 
+            // Verifique se result foi retornado corretamente
+            console.log("Post atualizado:", result); 
             await attVersion();
-            return res.status(200).redirect(`/posts/`);
+            return res.redirect('/posts');
         } else {
             return res.status(404).json({ mensagem: 'Post não encontrado ou não modificado.' });
         }
+        
 
     } catch (error) {
         console.error('Erro ao editar o post:', error);

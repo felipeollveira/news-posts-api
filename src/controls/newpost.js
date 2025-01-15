@@ -40,7 +40,11 @@ const post_go_db = async (req, res) => {
             conclusao: sanitizeInput(conclusao),
             imagem,
             data: new Date(),
+<<<<<<< HEAD
             autor: process.env.AUTOR || user
+=======
+            autor: user
+>>>>>>> 883495868f1b669d369d9138a6acf1b4b18992c7
         };
 
         try {

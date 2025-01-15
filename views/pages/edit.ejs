@@ -95,6 +95,12 @@
 
 <script type="text/javascript" src="/static/js/edit.js"></script>
 <script>
+
+    
+    const user = '<%= user %>';
+
+
+
     const modal = document.getElementById('popImagem')
     const imagemTextarea = document.querySelector('textarea[name="image"]')
     const novaImagem = document.getElementById('novaImagem')
@@ -121,8 +127,6 @@
 
  
     formulario.addEventListener("submit", eventPost);
-
-    const user = '<%= user %>';
    
 
     if (user === 'convidado') {
