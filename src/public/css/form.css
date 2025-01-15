@@ -31,6 +31,12 @@ main {
 
   .createpost h1{
     margin-bottom: 6px;
+    cursor: pointer;
+  }
+
+  .createpost h1:hover{
+    background-color: rgb(46, 45, 45);
+
   }
 
   .createpost section:first-child h5::after{
@@ -96,7 +102,7 @@ main {
 }
 
 .btnUpload:hover{
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(46, 45, 45);
 }
 
 
@@ -175,8 +181,13 @@ img{
 
 .popNovaImagem span p:nth-child(2):before{
   content:"Agora não";
-  padding: 4px;
+  padding: 6px;
   cursor: pointer;
+}
+
+.popNovaImagem span p:nth-child(2):hover{
+  background-color: rgb(46, 45, 45);
+
 }
 
 .popNovaImagem span p:nth-child(2){ 
@@ -224,10 +235,10 @@ img{
 .popNovaImagem textarea {
   width: 100%;
   height: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.212);
   border-radius: 5px;
   padding: 5px;
   font-size: 12px;
-  border: none;
 }
 
 .feedback{
@@ -254,11 +265,11 @@ img{
     min-height: 90px;
     font-size: 11pt;
     font-weight: 500;
-
+  
     padding: 10px;
     color: rgb(188, 188, 188);
     margin-bottom: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.212);
     border-radius: 4px;
     background-color: var(--background-fl)
   }

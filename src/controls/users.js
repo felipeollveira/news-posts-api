@@ -91,7 +91,7 @@ const autLogin = async (req, res) => {
 
   } catch (error) {
     console.error('Erro durante a autenticação:', error);
-    return res.status(500).send('Falha na autenticação');
+    return res.status(500).redirect('/');
   } finally {
     await client.close();
   }

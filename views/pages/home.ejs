@@ -26,8 +26,10 @@
       
     </span>
 
-<main>
+<main>        
+
     <div class="createpost">
+        <h1 onclick="newPostToggle()">Faça uma nova publicação</h1> 
 
         <span class="containerPopup" id="popSpan">
             <div class="popup" id="popLoading" >
@@ -37,9 +39,9 @@
                 <span class="time"><span id="second"></span><span id="ms"></span></span>
                 </div>
             </div>
-</span>
+        </span>
         
-        <h1>Nova publicação</h1>  
+         
         <form action="/" method="POST" id="form">
         <section>
             <h5>Titulo do novo post</h5>
@@ -104,7 +106,7 @@
 
         </form>
     </div>
-    <div class="formatos">
+    <div class="formatos" id="formatos">
 
         <%- include('../partials/formatacao'); %>
     </div>
@@ -155,6 +157,11 @@
     formulario.setAttribute('action', '');
     const botaoSubmit = document.querySelector('button[type="submit"]');
     botaoSubmit.style.display ='none'
+    }
+
+    function newPostToggle(){
+        document.getElementById("formatos").style.display = "none"
+        formulario.style.display = "none"
     }
 
     
