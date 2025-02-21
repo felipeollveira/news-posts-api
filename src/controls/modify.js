@@ -85,12 +85,11 @@ const editPost = async (req, res) => {
             { $set: sanitizedData },
             { returnDocument: 'after' } // Retorna o documento atualizado
         );
-        console.log(result); // Verifique o conteúdo de result para entender sua estrutura
+        //console.log(result); 
 
-        // Verificando se o resultado contém um documento atualizado
+
         if (result) { 
-            // Verifique se result foi retornado corretamente
-            console.log("Post atualizado:", result); 
+           // console.log("Post atualizado:", result); 
             await attVersion();
             return res.redirect('/posts');
         } else {

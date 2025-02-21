@@ -25,7 +25,7 @@ root.get('/login', loginPage)
 root.post('/login', autLogin)
 
 //rotas do adm
-//root.use(isAuthenticated)
+root.use(isAuthenticated)
 
 
 root.get('/' ,homePage)
