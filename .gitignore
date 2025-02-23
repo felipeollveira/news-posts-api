@@ -1,4 +1,4 @@
 node_modules/
 .env
 .vercel
-.gere-hash.js
+gere-hash.js
